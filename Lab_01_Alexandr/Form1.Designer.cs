@@ -1,6 +1,6 @@
-﻿namespace Lab_01
+﻿namespace Lab_01_Alexandr
 {
-    partial class MainForm
+    partial class Form1
     {
         /// <summary>
         /// Требуется переменная конструктора.
@@ -28,20 +28,36 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.DrawCanvas = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.DrawCanvas)).BeginInit();
             this.SuspendLayout();
             // 
-            // MainForm
+            // DrawCanvas
+            // 
+            this.DrawCanvas.BackColor = System.Drawing.Color.White;
+            this.DrawCanvas.Location = new System.Drawing.Point(286, 12);
+            this.DrawCanvas.Name = "DrawCanvas";
+            this.DrawCanvas.Size = new System.Drawing.Size(554, 530);
+            this.DrawCanvas.TabIndex = 0;
+            this.DrawCanvas.TabStop = false;
+            this.DrawCanvas.Click += new System.EventHandler(this.pictureBox1_Click);
+            // 
+            // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(575, 433);
-            this.Name = "MainForm";
-            this.Text = "Task One";
+            this.ClientSize = new System.Drawing.Size(852, 554);
+            this.Controls.Add(this.DrawCanvas);
+            this.Name = "Form1";
+            this.Text = "Form1";
+            ((System.ComponentModel.ISupportInitialize)(this.DrawCanvas)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
+        private System.Windows.Forms.PictureBox DrawCanvas;
     }
 }
 
