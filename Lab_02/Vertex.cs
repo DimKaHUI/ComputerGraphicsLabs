@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Lab_01
+namespace Lab_02
 {
     public struct Vertex : IComparable
     {
