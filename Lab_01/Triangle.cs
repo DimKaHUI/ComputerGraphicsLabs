@@ -50,7 +50,7 @@ namespace Lab_01
             float prevY = y;
             float angleStep = 1 / r;
             RotationMatrix2D rot = new RotationMatrix2D(angleStep);
-            for (float t = 1; t < Math.PI * 2; t += angleStep)
+            for (float t = angleStep; t < Math.PI * 2; t += angleStep)
             {
                 Vector2 rotated = new Vector2(prevX, prevY);
                 rotated = rot.Rotate(rotated);
