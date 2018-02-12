@@ -10,9 +10,10 @@
             Data[1, 2] = dy;
         }
 
+        
         public TranslationMatrix Inverse()
         {
-            TranslationMatrix t = (TranslationMatrix) Clone();
+            TranslationMatrix t = new TranslationMatrix(this[0, 2], this[1, 2]);
             t[0, 2] *= -1;
             t[1, 2] *= -1;
             return t;

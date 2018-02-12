@@ -27,17 +27,6 @@ namespace Lab_02
             X = x;
             Y = y;
         }
-
-        public Vector2(Vertex v)
-        {
-            X = (float)v.X;
-            Y = (float) v.Y;
-        }
-
-        public Vertex ToVertex(int index)
-        {
-            return new Vertex(X, Y, index);
-        }
     }
     public struct Vector3
     {

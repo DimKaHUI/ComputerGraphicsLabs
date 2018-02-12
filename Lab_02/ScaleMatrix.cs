@@ -19,12 +19,18 @@
 
         public Vector2 ScaleFrom(Vector2 vec, double xc, double yc)
         {
+            vec.X -= (float)xc;
+            vec.Y -= (float) yc;
             Matrix<double> col = FromVec2DCol(vec);
-            TranslationMatrix translate = new TranslationMatrix(-xc, -yc);
-            col = Prod(translate, col);
+            
             col = Prod(this, col);
-            col = Prod(translate.Inverse(), col);
-            return new Vector2((float)col[0, 0], (float)col[1, 0]);
+            
+            return new Vector2((float)(col[0, 0] + xc), (float)(col[1, 0] + yc));
+        }
+
+        public static Vector2 ScaleFromAnalitic(Vector2 vec,Vector2 from, Vector2 coeff)
+        {
+            return new Vector2(coeff.X * vec.X + (1 - coeff.X) * from.X, coeff.Y * vec.Y + (1 - coeff.Y) * from.Y);
         }
     }
 }

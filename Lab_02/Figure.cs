@@ -12,64 +12,62 @@ namespace Lab_02
     {
         public const float CircleA = 80;
         public const float CircleB = 60;
-        public float X, Y;
+        public const double Deg2Rad = Math.PI / 180;
 
-        private PictureBox _box;
-        private Graphics _gr;
+        private readonly PictureBox _box;
+        private readonly Graphics _gr;
+        /*private readonly EllipseImage _ellipse;
+        private readonly TriangleImage _triNose;
+        private readonly TriangleImage _triTail;
+        private readonly TriangleImage _triWing;
+        private readonly EllipseImage _circle;*/
+
+        private readonly  Image[] _images = new Image[7];
 
         public Figure(PictureBox picBox)
         {
             _box = picBox;
             _gr = _box.CreateGraphics();
             _gr.TranslateTransform(picBox.Width / 2.0f, picBox.Height / 2.0f);
-            X = 0;
-            Y = 0;
+
+            // Body
+            _images[0] = new EllipseImage(80, 60, new Pen(Color.Black), 3);
+
+            // Head
+            _images[1] = new EllipseImage(20, 20, new Pen(Color.Black), 3);
+            _images[1].Translate(-80, 49);
+
+            // Nose
+            _images[2] = new TriangleImage(new Vector2(-90, 50), new Vector2(-140, 40), new Vector2(-90, 40), new Pen(Color.Black));
+            
+            // Tail
+            _images[3] = new TriangleImage(new Vector2(70, 20), new Vector2(100, 20), new Vector2(80, 0), new Pen(Color.Black));
+
+            // Wing
+            _images[4] = new TriangleImage(new Vector2(30, -30), new Vector2(80, -100), new Vector2(60, -30), new Pen(Color.Black));
+
+            // Left leg
+            _images[5] = new LineImage(new Vector2(-50, -46), new Vector2(-100, -100), new Pen(Color.Black));
+
+            // Right leg
+            _images[6] = new LineImage(new Vector2(-20, -57), new Vector2(-20, -110), new Pen(Color.Black));
+
         }
 
-        public void Draw(Vector2 rotCenter, float rotationAngle, Vector2 scaleCenter, float kx, float ky)
+        public void Draw(Vector2 pos, Vector2 rotCenter, float rotationAngle, Vector2 scaleCenter, float kx, float ky)
         {
             _gr.Clear(Color.White);
 
-            RotationMatrix2D rot = new RotationMatrix2D((float)(rotationAngle * RotationMatrix2D.DegToRad));
-            X = rot.RotX(X - rotCenter.X, Y - rotCenter.Y) + rotCenter.X;
-            Y = rot.RotY(X - rotCenter.X, Y - rotCenter.Y) + rotCenter.Y;
-
-            ParametricEllipse(rotCenter, rotationAngle, scaleCenter, kx, ky);
-
-            
-        }
-
-
-        private void ParametricEllipse(Vector2 rotCenter, float rotationAngle, Vector2 scaleCenter, float kx, float ky)
-        {
-            RotationMatrix2D rot = new RotationMatrix2D((float)(rotationAngle * RotationMatrix2D.DegToRad));
-            float step = 0;
-            bool setup = false;
-            float prevX = 0, prevY = 0;
-            for (float fi = 0; fi < Math.PI * 2.0f; fi += step)
+            foreach (var img in _images)
             {
-                float r = (float)(CircleA * CircleB / Math.Sqrt(Math.Pow(CircleA, 2) * Math.Pow(Math.Sin(fi), 2) +
-                                                    Math.Pow(CircleB, 2) * Math.Pow(Math.Cos(fi), 2)));
-                step = 1 / r;
-                float x = X + (float)(r * Math.Cos(fi));
-                float y = Y + (float)(r * Math.Sin(fi));
-                Vector2 nPoint = rot.RotateAround(x, y, rotCenter.X, rotCenter.Y);
-
-
-                // TODO SCALE
-
-
-                if (setup)
-                {
-                    _gr.DrawLine(new Pen(Color.Black), prevX, prevY, nPoint.X, nPoint.Y);
-                }
-                else
-                {
-                    setup = true;
-                }
-                prevX = nPoint.X;
-                prevY = nPoint.Y;
+                if (img == null)
+                    continue;
+                img.Scale(kx, ky, scaleCenter);
+                img.RotateAround((float)(rotationAngle * Deg2Rad), rotCenter);
+                img.Translate(pos.X, pos.Y);
+                img.Draw(_box);
             }
         }
+
     }
 }
