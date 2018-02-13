@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Lab_02
 {
@@ -36,7 +32,7 @@ namespace Lab_02
         {
             if (steps < 1)
             {
-                throw new ArgumentException("Must be not less than 1", "steps");
+                throw new ArgumentException(@"Must be not less than 1", "steps");
             }
             _steps = steps;
             _curStep = steps - 1;
