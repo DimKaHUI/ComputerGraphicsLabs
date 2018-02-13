@@ -7,9 +7,8 @@ namespace Lab_02
     {
         private const int UndoSteps = 9;
 
-        private History _history;
+        private readonly History _history;
         private Figure _figure;
-        private bool _init;
         public MainForm()
         {
             InitializeComponent();
@@ -21,8 +20,6 @@ namespace Lab_02
 
         private void ProceedButt_Click(object sender, EventArgs e)
         {
-            _init = true;
-
             try
             {
                 float dx = (float) Convert.ToDouble(TranDxBox.Text);
@@ -110,7 +107,6 @@ namespace Lab_02
 
         private void ResetButt_Click(object sender, EventArgs e)
         {
-            _init = true;
             _figure = new Figure(DrawCanvas);
             _figure.Draw();
             _history.NextStep();
