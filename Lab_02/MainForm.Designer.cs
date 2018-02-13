@@ -48,20 +48,23 @@
             this.label11 = new System.Windows.Forms.Label();
             this.TranDyBox = new System.Windows.Forms.TextBox();
             this.TranDxBox = new System.Windows.Forms.TextBox();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.label12 = new System.Windows.Forms.Label();
             this.RedoButt = new System.Windows.Forms.Button();
             this.UndoButt = new System.Windows.Forms.Button();
             this.ToolTipElem = new System.Windows.Forms.ToolTip(this.components);
             this.UndoInfo = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.ScaleYCBox = new System.Windows.Forms.TextBox();
+            this.ScaleXCBox = new System.Windows.Forms.TextBox();
+            this.ResetButt = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DrawCanvas)).BeginInit();
-            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // DrawCanvas
             // 
             this.DrawCanvas.BackColor = System.Drawing.Color.White;
-            this.DrawCanvas.Location = new System.Drawing.Point(349, 12);
+            this.DrawCanvas.Location = new System.Drawing.Point(358, 7);
             this.DrawCanvas.Name = "DrawCanvas";
             this.DrawCanvas.Size = new System.Drawing.Size(450, 442);
             this.DrawCanvas.TabIndex = 0;
@@ -69,9 +72,10 @@
             // 
             // ProceedButt
             // 
+            this.ProceedButt.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.ProceedButt.Location = new System.Drawing.Point(12, 151);
             this.ProceedButt.Name = "ProceedButt";
-            this.ProceedButt.Size = new System.Drawing.Size(331, 23);
+            this.ProceedButt.Size = new System.Drawing.Size(173, 23);
             this.ProceedButt.TabIndex = 1;
             this.ProceedButt.Text = "Apply";
             this.ToolTipElem.SetToolTip(this.ProceedButt, "Applies transformation relatively to current state.\r\nShortcut: Enter");
@@ -224,22 +228,14 @@
             this.TranDxBox.TabIndex = 14;
             this.TranDxBox.Text = "0";
             // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.label12);
-            this.panel1.Location = new System.Drawing.Point(12, 180);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(200, 71);
-            this.panel1.TabIndex = 22;
-            // 
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(10, 11);
+            this.label12.Location = new System.Drawing.Point(7, 177);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(187, 52);
+            this.label12.Size = new System.Drawing.Size(184, 52);
             this.label12.TabIndex = 20;
-            this.label12.Text = "Modifications are applyed in this order:\r\n1) Scale\r\n2) Rotation\r\n3) Translation";
+            this.label12.Text = "Modifications are applied in this order:\r\n1) Scale\r\n2) Rotation\r\n3) Translation";
             // 
             // RedoButt
             // 
@@ -248,7 +244,7 @@
             this.RedoButt.Size = new System.Drawing.Size(75, 23);
             this.RedoButt.TabIndex = 23;
             this.RedoButt.Text = "Redo";
-            this.ToolTipElem.SetToolTip(this.RedoButt, "Shortcut: Ctrl + Y");
+            this.ToolTipElem.SetToolTip(this.RedoButt, "Press \"Apply\" to confirm action\r\nShortcut: Ctrl + Y");
             this.RedoButt.UseVisualStyleBackColor = true;
             this.RedoButt.Click += new System.EventHandler(this.RedoButt_Click);
             // 
@@ -259,7 +255,7 @@
             this.UndoButt.Size = new System.Drawing.Size(75, 23);
             this.UndoButt.TabIndex = 24;
             this.UndoButt.Text = "Undo";
-            this.ToolTipElem.SetToolTip(this.UndoButt, "Shotcut: Ctrl + Z");
+            this.ToolTipElem.SetToolTip(this.UndoButt, "Press \"Apply\" to confirm action\r\nShotcut: Ctrl + Z");
             this.UndoButt.UseVisualStyleBackColor = true;
             this.UndoButt.Click += new System.EventHandler(this.UndoButt_Click);
             // 
@@ -272,16 +268,67 @@
             this.UndoInfo.TabIndex = 25;
             this.UndoInfo.Text = "Count of undo steps: ";
             // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(309, 8);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(20, 13);
+            this.label8.TabIndex = 29;
+            this.label8.Text = "Yc";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(240, 8);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(20, 13);
+            this.label13.TabIndex = 28;
+            this.label13.Text = "Xc";
+            // 
+            // ScaleYCBox
+            // 
+            this.ScaleYCBox.Location = new System.Drawing.Point(286, 24);
+            this.ScaleYCBox.Name = "ScaleYCBox";
+            this.ScaleYCBox.Size = new System.Drawing.Size(66, 20);
+            this.ScaleYCBox.TabIndex = 27;
+            this.ScaleYCBox.Text = "0";
+            // 
+            // ScaleXCBox
+            // 
+            this.ScaleXCBox.Location = new System.Drawing.Point(214, 24);
+            this.ScaleXCBox.Name = "ScaleXCBox";
+            this.ScaleXCBox.Size = new System.Drawing.Size(66, 20);
+            this.ScaleXCBox.TabIndex = 26;
+            this.ScaleXCBox.Text = "0";
+            // 
+            // ResetButt
+            // 
+            this.ResetButt.ForeColor = System.Drawing.Color.Red;
+            this.ResetButt.Location = new System.Drawing.Point(188, 151);
+            this.ResetButt.Name = "ResetButt";
+            this.ResetButt.Size = new System.Drawing.Size(164, 23);
+            this.ResetButt.TabIndex = 30;
+            this.ResetButt.Text = "Reset/Draw initial";
+            this.ToolTipElem.SetToolTip(this.ResetButt, "Applies transformation relatively to current state.\r\nShortcut: Enter");
+            this.ResetButt.UseVisualStyleBackColor = true;
+            this.ResetButt.Click += new System.EventHandler(this.ResetButt_Click);
+            // 
             // MainForm
             // 
             this.AcceptButton = this.ProceedButt;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(811, 466);
+            this.ClientSize = new System.Drawing.Size(816, 466);
+            this.Controls.Add(this.ResetButt);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.label13);
+            this.Controls.Add(this.ScaleYCBox);
+            this.Controls.Add(this.ScaleXCBox);
             this.Controls.Add(this.UndoInfo);
             this.Controls.Add(this.UndoButt);
             this.Controls.Add(this.RedoButt);
-            this.Controls.Add(this.panel1);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label11);
@@ -301,14 +348,11 @@
             this.Controls.Add(this.ScaleXBox);
             this.Controls.Add(this.ProceedButt);
             this.Controls.Add(this.DrawCanvas);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.KeyPreview = true;
             this.Name = "MainForm";
             this.Text = "MainForm";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.DrawCanvas)).EndInit();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -335,11 +379,15 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox TranDyBox;
         private System.Windows.Forms.TextBox TranDxBox;
-        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Button RedoButt;
         private System.Windows.Forms.Button UndoButt;
         private System.Windows.Forms.ToolTip ToolTipElem;
         private System.Windows.Forms.Label UndoInfo;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TextBox ScaleYCBox;
+        private System.Windows.Forms.TextBox ScaleXCBox;
+        private System.Windows.Forms.Button ResetButt;
     }
 }

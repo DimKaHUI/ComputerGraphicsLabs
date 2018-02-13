@@ -5,7 +5,7 @@ namespace Lab_02
 {
     public partial class MainForm : Form
     {
-        private const int UndoSteps = 4;
+        private const int UndoSteps = 9;
 
         private History _history;
         private Figure _figure;
@@ -21,15 +21,6 @@ namespace Lab_02
 
         private void ProceedButt_Click(object sender, EventArgs e)
         {
-            if (TranDxBox.Text == @"0" &&
-                TranDyBox.Text == @"0" &&
-                ScaleXBox.Text == @"1" &&
-                ScaleYBox.Text == @"1" &&
-                RotAngleBox.Text == @"0" && _init)
-            {
-                return;
-            }
-
             _init = true;
 
             try
@@ -39,8 +30,8 @@ namespace Lab_02
                 Vector2 rotCent = new Vector2((float) Convert.ToDouble(RotXBox.Text),
                     (float) Convert.ToDouble(RotYBox.Text));
                 float angle = -(float) Convert.ToDouble(RotAngleBox.Text);
-                Vector2 scaleCent = new Vector2((float) Convert.ToDouble(ScaleXBox.Text),
-                    (float) Convert.ToDouble(ScaleYBox.Text));
+                Vector2 scaleCent = new Vector2((float) Convert.ToDouble(ScaleXCBox.Text),
+                    (float) Convert.ToDouble(ScaleYCBox.Text));
                 float kx = (float) Convert.ToDouble(ScaleXBox.Text);
                 float ky = (float) Convert.ToDouble(ScaleYBox.Text);
 
@@ -61,6 +52,8 @@ namespace Lab_02
             TranDyBox.Text = @"0";
             ScaleXBox.Text = @"1";
             ScaleYBox.Text = @"1";
+            ScaleXCBox.Text = @"0";
+            ScaleYCBox.Text = @"0";
             RotAngleBox.Text = @"0";
             RotXBox.Text = @"0";
             RotYBox.Text = @"0";
@@ -113,6 +106,15 @@ namespace Lab_02
         private void RedoButt_Click(object sender, EventArgs e)
         {
             Redo();
+        }
+
+        private void ResetButt_Click(object sender, EventArgs e)
+        {
+            _init = true;
+            _figure = new Figure(DrawCanvas);
+            _figure.Draw();
+            _history.NextStep();
+            _history.StoreData("Figure", _figure);
         }
     }
 }

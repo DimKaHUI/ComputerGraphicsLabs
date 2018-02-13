@@ -68,37 +68,16 @@ namespace Lab_02
 
         public void NextStep()
         {
-            int shift = _steps - 2 - _curStep;
-
-            if (shift >= 0)
-            {
-                for (int i = 0; i < shift; i++)
-                {
-                    for (int j = 0; j < _storage.Count; j++)
-                    {
-                        for (int k = _steps - 1; k > 0; k--)
-                            _storage[j].Data[k] = _storage[j][k - 1];
-                    }
-                }
-                if (_minIndex < _steps - 1)
-                _minIndex += shift;
-            }
-            else
-            {
-                for (int i = 0; i < -shift; i++)
-                {
-                    for (int j = 0; j < _storage.Count; j++)
-                    {
-                        for (int k = 0; k < _steps - 1; k++)
-                            _storage[j].Data[k] = _storage[j][k + 1];
-                    }
-                }
-                if(_minIndex > 0)
-                    _minIndex += shift;
-            }
             _curStep = _steps - 1;
-
-            //MessageBox.Show(_curStep.ToString());
+            for (int i = 0; i < _storage.Count; i++)
+            {
+                for (int j = 0; j < _steps - 1; j++)
+                {
+                    _storage[i].Data[j] = _storage[i].Data[j + 1];
+                }
+            }
+            if (_minIndex > 0)
+                _minIndex--;
         }
 
         public bool PrevStep()
