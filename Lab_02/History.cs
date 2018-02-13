@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Lab_02
 {
 
     struct Record
     {
-        public  string Key;
+        public string Key;
         public object[] Data;
         public Record(string key, int steps)
         {
@@ -27,7 +28,7 @@ namespace Lab_02
     {
         private int _steps;
         private int _curStep;
-        private int _savedLen = 0;
+        private int _minIndex;
 
         private List<Record> _storage = new List<Record>();
 
@@ -39,6 +40,7 @@ namespace Lab_02
             }
             _steps = steps;
             _curStep = steps - 1;
+            _minIndex = _curStep + 1;
         }
 
         public void StoreData(string key, ICloneable data)
@@ -48,7 +50,7 @@ namespace Lab_02
                 if (_storage[i].Key == key)
                 {
                     _storage[i].Data[_curStep] = data.Clone();
-                    break;
+                    return;
                 }
             }
             _storage.Add(new Record(key, _steps));
@@ -67,45 +69,46 @@ namespace Lab_02
             return null;
         }
 
+
         public void NextStep()
         {
-            /*if (_curStep > _steps - 1)
-                _curStep = _steps - 1;*/
+            int shift = _steps - 2 - _curStep;
 
-            if (_curStep == _steps - 1)
+            if (shift >= 0)
             {
-                for (int i = 0; i < _storage.Count; i++)
+                for (int i = 0; i < shift; i++)
                 {
-                    for (int k = 0; k < _steps - 1; k++)
+                    for (int j = 0; j < _storage.Count; j++)
                     {
-                        _storage[i].Data[k] = _storage[i].Data[k + 1];
+                        for (int k = _steps - 1; k > 0; k--)
+                            _storage[j].Data[k] = _storage[j][k - 1];
                     }
-                    _storage[i].Data[_steps - 1] = null;
                 }
-                _savedLen++;
+                if (_minIndex < _steps - 1)
+                _minIndex += shift;
             }
             else
             {
-                for (int i = 0; i < _storage.Count; i++)
+                for (int i = 0; i < -shift; i++)
                 {
-                    while (_curStep < _steps - 2)
+                    for (int j = 0; j < _storage.Count; j++)
                     {
-                        _curStep++;
-                        _savedLen--;
-                        for (int k = _steps - 1; k > 0; k--)
-                        {
-                            _storage[i].Data[k - 1] = _storage[i].Data[k];
-                        }
+                        for (int k = 0; k < _steps - 1; k++)
+                            _storage[j].Data[k] = _storage[j][k + 1];
                     }
-                    _storage[i].Data[_steps - 1] = null;
                 }
-                _curStep++;
+                if(_minIndex > 0)
+                    _minIndex += shift;
             }
+            _curStep = _steps - 1;
+
+            //MessageBox.Show(_curStep.ToString());
         }
 
         public bool PrevStep()
         {
-            if (_curStep > _steps - _savedLen)
+            //MessageBox.Show(_curStep.ToString());
+            if (_curStep > _minIndex)
             {
                 _curStep--;
                 return true;
@@ -115,6 +118,7 @@ namespace Lab_02
 
         public bool Revert()
         {
+            //MessageBox.Show(_curStep.ToString());
             if (_curStep < _steps - 1)
             {
                 _curStep++;

@@ -12,7 +12,7 @@ namespace Lab_02
 {
     public partial class MainForm : Form
     {
-        private History _history = new History(8);
+        private History _history = new History(4);
         private Figure _figure;
         public MainForm()
         {
@@ -26,7 +26,7 @@ namespace Lab_02
             float dx = (float)Convert.ToDouble(TranDxBox.Text);
             float dy = (float)Convert.ToDouble(TranDyBox.Text);
             Vector2 rotCent = new Vector2((float)Convert.ToDouble(RotXBox.Text), (float)Convert.ToDouble(RotYBox.Text));
-            float angle = (float) Convert.ToDouble(RotAngleBox.Text);
+            float angle = -(float) Convert.ToDouble(RotAngleBox.Text);
             Vector2 scaleCent = new Vector2((float)Convert.ToDouble(ScaleXBox.Text), (float)Convert.ToDouble(ScaleYBox.Text));
             float kx = (float) Convert.ToDouble(ScaleXBox.Text);
             float ky = (float) Convert.ToDouble(ScaleYBox.Text);
