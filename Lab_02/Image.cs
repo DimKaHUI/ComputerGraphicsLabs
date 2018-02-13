@@ -60,10 +60,10 @@ namespace Lab_02
         {
             Image clone = new Image(Pen);
             clone.Pen = Pen;
-            clone.Points = new List<Vector2>(Points.Count);
+            clone.Points = new List<Vector2>();
             for (int i = 0; i < Points.Count; i++)
             {
-                clone.Points[i] = Points[i];
+                clone.Points.Add(Points[i]);
             }
             return clone;
         }

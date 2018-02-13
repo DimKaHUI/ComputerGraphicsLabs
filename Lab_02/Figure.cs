@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace Lab_02
 {
-    class Figure
+    class Figure : ICloneable
     {
         public const float CircleA = 80;
         public const float CircleB = 60;
@@ -16,13 +16,21 @@ namespace Lab_02
 
         private readonly PictureBox _box;
         private readonly Graphics _gr;
-        /*private readonly EllipseImage _ellipse;
-        private readonly TriangleImage _triNose;
-        private readonly TriangleImage _triTail;
-        private readonly TriangleImage _triWing;
-        private readonly EllipseImage _circle;*/
 
         private readonly  Image[] _images = new Image[7];
+
+        private Figure(PictureBox picBox, Image[] images)
+        {
+            _box = picBox;
+            _gr = _box.CreateGraphics();
+            _gr.TranslateTransform(picBox.Width / 2.0f, picBox.Height / 2.0f);
+
+            _images = new Image[images.Length];
+            for (int i = 0; i < images.Length; i++)
+            {
+                _images[i] = (Image)images[i].Clone();
+            }
+        }
 
         public Figure(PictureBox picBox)
         {
@@ -69,5 +77,21 @@ namespace Lab_02
             }
         }
 
+        public void Draw()
+        {
+            _gr.Clear(Color.White);
+            foreach (var img in _images)
+            {
+                if (img == null)
+                    continue;
+                img.Draw(_box);
+            }
+        }
+
+        public object Clone()
+        {
+            Figure f = new Figure(_box, _images);
+            return f;
+        }
     }
 }

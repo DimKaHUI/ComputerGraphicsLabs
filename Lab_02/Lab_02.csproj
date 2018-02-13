@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="EllipseImage.cs" />
     <Compile Include="Figure.cs" />
+    <Compile Include="History.cs" />
     <Compile Include="IDrawable.cs" />
     <Compile Include="Image.cs" />
     <Compile Include="LineImage.cs" />

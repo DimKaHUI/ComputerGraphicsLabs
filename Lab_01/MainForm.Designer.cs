@@ -36,15 +36,15 @@ namespace Lab_01
             this.components = new System.ComponentModel.Container();
             this.DrawCanvas = new System.Windows.Forms.PictureBox();
             this.PointGrid = new System.Windows.Forms.DataGridView();
+            this.PointX = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PointY = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.IndexCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ProceedButton = new System.Windows.Forms.Button();
             this.GeneratePointsButton = new System.Windows.Forms.Button();
             this.GenInputBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.ResultLabel = new System.Windows.Forms.Label();
             this.DelRowButt = new System.Windows.Forms.Button();
-            this.PointX = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PointY = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.IndexCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DeleteAllButton = new System.Windows.Forms.Button();
             this.ToolTipDef = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.DrawCanvas)).BeginInit();
@@ -75,6 +75,26 @@ namespace Lab_01
             this.PointGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.PointGrid_CellContentClick);
             this.PointGrid.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.PointGrid_RowsAdded);
             this.PointGrid.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.PointGrid_RowsRemoved);
+            // 
+            // PointX
+            // 
+            this.PointX.HeaderText = "X";
+            this.PointX.Name = "PointX";
+            this.PointX.Width = 80;
+            // 
+            // PointY
+            // 
+            this.PointY.DividerWidth = 5;
+            this.PointY.HeaderText = "Y";
+            this.PointY.Name = "PointY";
+            this.PointY.Width = 80;
+            // 
+            // IndexCol
+            // 
+            this.IndexCol.HeaderText = "Index";
+            this.IndexCol.Name = "IndexCol";
+            this.IndexCol.ReadOnly = true;
+            this.IndexCol.Width = 60;
             // 
             // ProceedButton
             // 
@@ -134,26 +154,6 @@ namespace Lab_01
             this.DelRowButt.UseVisualStyleBackColor = true;
             this.DelRowButt.Click += new System.EventHandler(this.DelRowButt_Click);
             // 
-            // PointX
-            // 
-            this.PointX.HeaderText = "X";
-            this.PointX.Name = "PointX";
-            this.PointX.Width = 80;
-            // 
-            // PointY
-            // 
-            this.PointY.DividerWidth = 5;
-            this.PointY.HeaderText = "Y";
-            this.PointY.Name = "PointY";
-            this.PointY.Width = 80;
-            // 
-            // IndexCol
-            // 
-            this.IndexCol.HeaderText = "Index";
-            this.IndexCol.Name = "IndexCol";
-            this.IndexCol.ReadOnly = true;
-            this.IndexCol.Width = 60;
-            // 
             // DeleteAllButton
             // 
             this.DeleteAllButton.Location = new System.Drawing.Point(446, 50);
@@ -180,6 +180,7 @@ namespace Lab_01
             this.Controls.Add(this.ProceedButton);
             this.Controls.Add(this.PointGrid);
             this.Controls.Add(this.DrawCanvas);
+            this.KeyPreview = true;
             this.Name = "MainForm";
             this.Text = "Task One";
             this.Load += new System.EventHandler(this.MainForm_Load);

@@ -12,6 +12,7 @@ namespace Lab_02
 {
     public partial class MainForm : Form
     {
+        private History _history = new History(8);
         private Figure _figure;
         public MainForm()
         {
@@ -32,6 +33,9 @@ namespace Lab_02
 
             _figure.Draw(new Vector2(dx, dy), rotCent, angle, scaleCent, kx, ky);
 
+            _history.NextStep();
+            _history.StoreData("Figure", _figure);
+
             TranDxBox.Text = "0";
             TranDyBox.Text = "0";
             ScaleXBox.Text = "1";
@@ -42,6 +46,34 @@ namespace Lab_02
 
             // Setting up information
             //PosLabel.Text = String.Format("({0:0.0}, {1:0.0})", _figure.X, _figure.Y);
+        }
+
+
+        private void MainForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.Z)
+            {
+                if (!_history.PrevStep())
+                    return;
+                Figure tmp = (Figure) _history.LoadData("Figure");
+                if (tmp != null)
+                {
+                    _figure = tmp;
+                    _figure.Draw();
+                }
+            }
+
+            if (e.Control && e.KeyCode == Keys.Y)
+            {
+                if (!_history.Revert())
+                    return;
+                Figure tmp = (Figure)_history.LoadData("Figure");
+                if (tmp != null)
+                {
+                    _figure = tmp;
+                    _figure.Draw();
+                }
+            }
         }
     }
 }

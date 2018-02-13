@@ -14,6 +14,9 @@ namespace Lab_01
     public partial class MainForm : Form
     {
         Random rnd = new Random();
+
+
+
         public MainForm()
         {
             InitializeComponent();
@@ -154,6 +157,8 @@ namespace Lab_01
         {
             PointGrid.Rows.Clear();
         }
+
+        
 
 
     }
