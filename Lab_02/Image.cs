@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Lab_02
@@ -29,7 +26,7 @@ namespace Lab_02
                 gr.DrawLine(Pen, Points[0].X, -Points[0].Y, Points[Points.Count - 1].X, -Points[Points.Count - 1].Y);
         }
 
-        public void RotateAround(float angle, Vector2 center)
+        public virtual void RotateAround(float angle, Vector2 center)
         {
             
             RotationMatrix2D rot = new RotationMatrix2D(angle);
@@ -39,7 +36,7 @@ namespace Lab_02
             }
         }
 
-        public void Scale(float kx, float ky, Vector2 center)
+        public virtual void Scale(float kx, float ky, Vector2 center)
         {
             //ScaleMatrix2D scale = new ScaleMatrix2D(kx, ky);
             for (int i = 0; i < Points.Count; i++)
@@ -48,7 +45,7 @@ namespace Lab_02
             }
         }
 
-        public void Translate(float dx, float dy)
+        public virtual void Translate(float dx, float dy)
         {
             for (int i = 0; i < Points.Count; i++)
             {
