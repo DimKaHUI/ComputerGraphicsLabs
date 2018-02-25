@@ -38,7 +38,6 @@ namespace Lab_02
 
         public virtual void Scale(float kx, float ky, Vector2 center)
         {
-            //ScaleMatrix2D scale = new ScaleMatrix2D(kx, ky);
             for (int i = 0; i < Points.Count; i++)
             {
                 Points[i] = ScaleMatrix2D.ScaleFromAnalitic(Points[i], center, new Vector2(kx, ky));
