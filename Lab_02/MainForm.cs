@@ -22,18 +22,13 @@ namespace Lab_02
         {
             try
             {
-                float dx = (float) Convert.ToDouble(TranDxBox.Text);
-                float dy = (float) Convert.ToDouble(TranDyBox.Text);
-                Vector2 rotCent = new Vector2((float) Convert.ToDouble(RotXBox.Text),
-                    (float) Convert.ToDouble(RotYBox.Text));
-                float angle = -(float) Convert.ToDouble(RotAngleBox.Text);
                 Vector2 scaleCent = new Vector2((float) Convert.ToDouble(ScaleXCBox.Text),
                     (float) Convert.ToDouble(ScaleYCBox.Text));
                 float kx = (float) Convert.ToDouble(ScaleXBox.Text);
                 float ky = (float) Convert.ToDouble(ScaleYBox.Text);
 
 
-                _figure.Draw(new Vector2(dx, dy), rotCent, angle, scaleCent, kx, ky);
+                _figure.Draw(new Vector2(0, 0), new Vector2(0, 0), 0, scaleCent, kx, ky);
 
                 _history.NextStep();
                 _history.StoreData("Figure", _figure);
@@ -45,15 +40,10 @@ namespace Lab_02
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            TranDxBox.Text = @"0";
-            TranDyBox.Text = @"0";
-            ScaleXBox.Text = @"1";
-            ScaleYBox.Text = @"1";
-            ScaleXCBox.Text = @"0";
-            ScaleYCBox.Text = @"0";
-            RotAngleBox.Text = @"0";
-            RotXBox.Text = @"0";
-            RotYBox.Text = @"0";
+            //ScaleXBox.Text = @"1";
+            //ScaleYBox.Text = @"1";
+            //ScaleXCBox.Text = @"0";
+            //ScaleYCBox.Text = @"0";
         }
 
         private void Undo()
@@ -111,6 +101,54 @@ namespace Lab_02
             _figure.Draw();
             _history.NextStep();
             _history.StoreData("Figure", _figure);
+        }
+
+        private void RotButt_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Vector2 rotCent = new Vector2((float)Convert.ToDouble(RotXBox.Text),
+                    (float)Convert.ToDouble(RotYBox.Text));
+                float angle = -(float)Convert.ToDouble(RotAngleBox.Text);
+                
+                _figure.Draw(new Vector2(0, 0), rotCent, angle, new Vector2(0,0), 1, 1);
+
+                _history.NextStep();
+                _history.StoreData("Figure", _figure);
+            }
+            catch (FormatException formatException)
+            {
+                MessageBox.Show(@"Возникла ошибка ввода данных. 
+" + formatException.Message, @"I/O ERROR",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            //RotAngleBox.Text = @"0";
+            //RotXBox.Text = @"0";
+            //RotYBox.Text = @"0";
+        }
+
+        private void TranslateButt_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                float dx = (float)Convert.ToDouble(TranDxBox.Text);
+                float dy = (float)Convert.ToDouble(TranDyBox.Text);
+
+                _figure.Draw(new Vector2(dx, dy), new Vector2(0, 0), 0, new Vector2(0, 0), 1, 1);
+
+                _history.NextStep();
+                _history.StoreData("Figure", _figure);
+            }
+            catch (FormatException formatException)
+            {
+                MessageBox.Show(@"Возникла ошибка ввода данных. 
+" + formatException.Message, @"I/O ERROR",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            //TranDxBox.Text = @"0";
+            //TranDyBox.Text = @"0";
         }
     }
 }

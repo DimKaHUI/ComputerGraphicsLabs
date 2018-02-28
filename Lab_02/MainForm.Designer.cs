@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.DrawCanvas = new System.Windows.Forms.PictureBox();
-            this.ProceedButt = new System.Windows.Forms.Button();
+            this.ScaleButt = new System.Windows.Forms.Button();
             this.ScaleXBox = new System.Windows.Forms.TextBox();
             this.ScaleYBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -48,7 +48,6 @@
             this.label11 = new System.Windows.Forms.Label();
             this.TranDyBox = new System.Windows.Forms.TextBox();
             this.TranDxBox = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
             this.RedoButt = new System.Windows.Forms.Button();
             this.UndoButt = new System.Windows.Forms.Button();
             this.ToolTipElem = new System.Windows.Forms.ToolTip(this.components);
@@ -58,6 +57,8 @@
             this.label13 = new System.Windows.Forms.Label();
             this.ScaleYCBox = new System.Windows.Forms.TextBox();
             this.ScaleXCBox = new System.Windows.Forms.TextBox();
+            this.RotButt = new System.Windows.Forms.Button();
+            this.TranslateButt = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DrawCanvas)).BeginInit();
             this.SuspendLayout();
             // 
@@ -71,18 +72,18 @@
             this.DrawCanvas.TabIndex = 0;
             this.DrawCanvas.TabStop = false;
             // 
-            // ProceedButt
+            // ScaleButt
             // 
-            this.ProceedButt.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ProceedButt.Location = new System.Drawing.Point(18, 232);
-            this.ProceedButt.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.ProceedButt.Name = "ProceedButt";
-            this.ProceedButt.Size = new System.Drawing.Size(260, 58);
-            this.ProceedButt.TabIndex = 1;
-            this.ProceedButt.Text = "Применить";
-            this.ToolTipElem.SetToolTip(this.ProceedButt, "Применяет трансформирование к текущему изображению\r\nShortcut: Enter");
-            this.ProceedButt.UseVisualStyleBackColor = true;
-            this.ProceedButt.Click += new System.EventHandler(this.ProceedButt_Click);
+            this.ScaleButt.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ScaleButt.Location = new System.Drawing.Point(18, 232);
+            this.ScaleButt.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.ScaleButt.Name = "ScaleButt";
+            this.ScaleButt.Size = new System.Drawing.Size(260, 58);
+            this.ScaleButt.TabIndex = 1;
+            this.ScaleButt.Text = "Масштабирование";
+            this.ToolTipElem.SetToolTip(this.ScaleButt, "Применяет трансформирование к текущему изображению\r\nShortcut: Enter");
+            this.ScaleButt.UseVisualStyleBackColor = true;
+            this.ScaleButt.Click += new System.EventHandler(this.ProceedButt_Click);
             // 
             // ScaleXBox
             // 
@@ -247,16 +248,6 @@
             this.TranDxBox.TabIndex = 14;
             this.TranDxBox.Text = "0";
             // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(14, 295);
-            this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(281, 80);
-            this.label12.TabIndex = 20;
-            this.label12.Text = "Изменения применяются в порядке\r\n1) Масштабирование\r\n2) Поворот\r\n3) Перенос";
-            // 
             // RedoButt
             // 
             this.RedoButt.Location = new System.Drawing.Point(129, 872);
@@ -342,14 +333,41 @@
             this.ScaleXCBox.TabIndex = 26;
             this.ScaleXCBox.Text = "0";
             // 
+            // RotButt
+            // 
+            this.RotButt.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.RotButt.Location = new System.Drawing.Point(18, 300);
+            this.RotButt.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.RotButt.Name = "RotButt";
+            this.RotButt.Size = new System.Drawing.Size(260, 58);
+            this.RotButt.TabIndex = 31;
+            this.RotButt.Text = "Поворот";
+            this.ToolTipElem.SetToolTip(this.RotButt, "Применяет трансформирование к текущему изображению\r\nShortcut: Enter");
+            this.RotButt.UseVisualStyleBackColor = true;
+            this.RotButt.Click += new System.EventHandler(this.RotButt_Click);
+            // 
+            // TranslateButt
+            // 
+            this.TranslateButt.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.TranslateButt.Location = new System.Drawing.Point(18, 368);
+            this.TranslateButt.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.TranslateButt.Name = "TranslateButt";
+            this.TranslateButt.Size = new System.Drawing.Size(260, 58);
+            this.TranslateButt.TabIndex = 32;
+            this.TranslateButt.Text = "Перенос";
+            this.ToolTipElem.SetToolTip(this.TranslateButt, "Применяет трансформирование к текущему изображению\r\nShortcut: Enter");
+            this.TranslateButt.UseVisualStyleBackColor = true;
+            this.TranslateButt.Click += new System.EventHandler(this.TranslateButt_Click);
+            // 
             // MainForm
             // 
-            this.AcceptButton = this.ProceedButt;
+            this.AcceptButton = this.ScaleButt;
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1276, 692);
+            this.Controls.Add(this.TranslateButt);
+            this.Controls.Add(this.RotButt);
             this.Controls.Add(this.ResetButt);
-            this.Controls.Add(this.label12);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.ScaleYCBox);
@@ -374,7 +392,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.ScaleYBox);
             this.Controls.Add(this.ScaleXBox);
-            this.Controls.Add(this.ProceedButt);
+            this.Controls.Add(this.ScaleButt);
             this.Controls.Add(this.DrawCanvas);
             this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -390,7 +408,7 @@
         #endregion
 
         private System.Windows.Forms.PictureBox DrawCanvas;
-        private System.Windows.Forms.Button ProceedButt;
+        private System.Windows.Forms.Button ScaleButt;
         private System.Windows.Forms.TextBox ScaleXBox;
         private System.Windows.Forms.TextBox ScaleYBox;
         private System.Windows.Forms.Label label1;
@@ -408,7 +426,6 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox TranDyBox;
         private System.Windows.Forms.TextBox TranDxBox;
-        private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Button RedoButt;
         private System.Windows.Forms.Button UndoButt;
         private System.Windows.Forms.ToolTip ToolTipElem;
@@ -418,5 +435,7 @@
         private System.Windows.Forms.TextBox ScaleYCBox;
         private System.Windows.Forms.TextBox ScaleXCBox;
         private System.Windows.Forms.Button ResetButt;
+        private System.Windows.Forms.Button RotButt;
+        private System.Windows.Forms.Button TranslateButt;
     }
 }
