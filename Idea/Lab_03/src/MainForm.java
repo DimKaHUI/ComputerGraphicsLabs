@@ -104,13 +104,13 @@ public class MainForm extends JFrame
                 alg = Line.Algorithm.INTEGRAL;
                 break;
             case 1:
-                alg = Line.Algorithm.BREZENGHEM_INTEGRAL;
+                alg = Line.Algorithm.BRESENHAM_FLOAT;
                 break;
             case 2:
-                alg = Line.Algorithm.BREZENGHEM_FLOAT;
+                alg = Line.Algorithm.BRESENHAM_INTEGRAL;
                 break;
             case 3:
-                alg = Line.Algorithm.BREZENGHEM_LOW_STEP;
+                alg = Line.Algorithm.BRESENHAM_LOW_STEP;
                 break;
             default:
                 alg = Line.Algorithm.INTEGRAL;

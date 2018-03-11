@@ -41,7 +41,8 @@
             <properties>
               <model>
                 <item value="Целочисленный"/>
-                <item value="Брезенхема"/>
+                <item value="Брезенхема (вещественный)"/>
+                <item value="Брезенхема (целый)"/>
                 <item value="Брезенхема (сглаживание ступеней)"/>
               </model>
             </properties>
