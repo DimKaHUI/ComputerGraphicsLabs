@@ -19,7 +19,8 @@ public class PixImage
         gr.setColor(Color);
         for(Vertex vertex : Vertexes)
         {
-            //gr.drawRect(vertex.x, vertex.y, 1, 1);
+            if(vertex == null)
+                continue;
             gr.drawOval(vertex.x - 1, -(vertex.y + 1), 1, 1);
         }
     }

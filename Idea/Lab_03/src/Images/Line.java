@@ -60,61 +60,120 @@ public class Line extends PixImage
         }
     }
 
+    private int sign(int val)
+    {
+        if(val > 0)
+            return 1;
+        if(val < 0)
+            return -1;
+        return 0;
+    }
+
     private void buildBresenhamFloat(Vertex a, Vertex b)
     {
-        int hx = b.x - a.x;
-        int hy = b.y - a.y;
-        int dx = Math.abs(hx);
-        int dy = Math.abs(hy);
-        float error = 0;
-        float derror = (float)dy / dx;
-        int y = a.y;
-        int diry = hy;
-        if (diry > 0) diry = 1;
-        if(diry < 0) diry = -1;
+        int
+                x = a.x,
+                y = a.y,
+                dx = b.x - a.x,
+                dy = b.y - a.y,
+                sx = sign(dx),
+                sy = sign(dy);
 
-        Vertexes = new Vertex[Math.abs(hx)];
-        int x_step = 1;
-        if(hx < 0)
-            x_step = -1;
-        for(int x = a.x, i = 0; x != b.x; x += x_step, i++)
+        boolean exchange = false;
+        dy = Math.abs(dy);
+        dx = Math.abs(dx);
+        if(dy > dx)
         {
-            Vertexes[i] = new Vertex(x,y);
-            error += derror;
-            if(error >= 0.5)
+            int t = dy;
+            dy = dx;
+            dx = t;
+            exchange = true;
+        }
+        float m = (float)dy/dx;
+        float e = 0;
+
+        if(!exchange)
+        {
+            Vertexes = new Vertex[dx];
+            for(int i = 0; x != b.x; x += sx, i++)
             {
-                y += diry;
-                error -= 1.0;
+                Vertexes[i] = new Vertex(x, y);
+                e += m;
+                if(e >= 0.5)
+                {
+                    y += sy;
+                    e -= 1.0f;
+                }
             }
         }
+        else
+        {
+            Vertexes = new Vertex[dx];
+            for(int i = 0; y != b.y; y += sy, i++)
+            {
+                Vertexes[i] = new Vertex(x, y);
+                e += m;
+                if(e >= 0.5)
+                {
+                    x += sx;
+                    e -= 1.0f;
+                }
+            }
+        }
+
     }
 
     private void buildBresenhamIntegral(Vertex a, Vertex b)
     {
         int
-                hx = b.x - a.x,
-                hy = b.y - a.y,
-                dx = Math.abs(hx),
-                dy = Math.abs(hy),
-                error = 0,
-                derror = dy,
+                x = a.x,
                 y = a.y,
-                diry = hy;
-        if (diry > 0) diry = 1;
-        if (diry < 0) diry = -1;
+                dx = b.x - a.x,
+                dy = b.y - a.y,
+                sx = sign(dx),
+                sy = sign(dy);
 
-        Vertexes = new Vertex[Math.abs(hx)];
-        int x_step = 1;
-        if(hx < 0)
-            x_step = -1;
-        for (int x = a.x, i = 0; x != b.x; x += x_step, i++)
+        boolean exchange = false;
+        dy = Math.abs(dy);
+        dx = Math.abs(dx);
+        if(dy > dx)
         {
-            Vertexes[i] = new Vertex(x, y);
-            error += derror;
-            if (2 * error >= dx)
+            int t = dy;
+            dy = dx;
+            dx = t;
+            exchange = true;
+        }
+
+        if(!exchange)
+        {
+            int e = 0;
+            int m = dy;
+            Vertexes = new Vertex[dx];
+            for(int i = 0; x != b.x; x += sx, i++)
             {
-                y += diry;
-                error -= dx;
+                Vertexes[i] = new Vertex(x, y);
+                e += m;
+                if(2 * e >= dy)
+                {
+                    y += sy;
+                    e -= dx;
+                }
+            }
+        }
+        else
+        {
+            int e = 0;
+            int m = dy;
+            Vertexes = new Vertex[dx];
+            for(int i = 0; y != b.y; y += sy, i++)
+            {
+                Vertexes[i] = new Vertex(x, y);
+                e += m;
+                if(2 * e >= dx)
+                {
+                    x += sx;
+                    e -= dx;
+                }
             }
         }
     }

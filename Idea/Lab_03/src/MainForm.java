@@ -20,6 +20,9 @@ public class MainForm extends JFrame
     private JTextField xsBox;
     private JComboBox colorChooser;
     private JButton clearButton;
+    private JButton circleButton;
+    private JTextField radiusBox;
+    private JTextField angleStepBox;
 
     private ArrayList<PixImage> images = new ArrayList<>();
 
@@ -28,6 +31,7 @@ public class MainForm extends JFrame
         // Setting up procedures
         proceedButton.addActionListener(new proceedListener());
         clearButton.addActionListener(new clearListener());
+        circleButton.addActionListener(new circleListener());
 
         // Displaying UI
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -60,6 +64,63 @@ public class MainForm extends JFrame
         {
             img.draw(drawingCanvas);
         }
+    }
+
+    private Color parseColor()
+    {
+        Color color;
+        int item = colorChooser.getSelectedIndex();
+        switch(item)
+        {
+        case 0:
+            color = Color.red;
+            break;
+        case 1:
+            color = Color.orange;
+            break;
+        case 2:
+            color = Color.yellow;
+            break;
+        case 3:
+            color = Color.green;
+            break;
+        case 4:
+            color = Color.cyan;
+            break;
+        case 5:
+            color = Color.blue;
+            break;
+        case 6:
+            color = Color.magenta;
+            break;
+        default:
+            color = Color.BLACK;
+        }
+        return color;
+    }
+
+    private Line.Algorithm parseAlg()
+    {
+        Line.Algorithm alg;
+        int item = algChooser.getSelectedIndex();
+        switch(item)
+        {
+        case 0:
+            alg = Line.Algorithm.INTEGRAL;
+            break;
+        case 1:
+            alg = Line.Algorithm.BRESENHAM_FLOAT;
+            break;
+        case 2:
+            alg = Line.Algorithm.BRESENHAM_INTEGRAL;
+            break;
+        case 3:
+            alg = Line.Algorithm.BRESENHAM_LOW_STEP;
+            break;
+        default:
+            alg = Line.Algorithm.INTEGRAL;
+        }
+        return alg;
     }
 
     public class clearListener implements ActionListener
@@ -96,56 +157,50 @@ public class MainForm extends JFrame
             a = new Vertex(X1, Y1);
             b = new Vertex(X2, Y2);
 
-            Line.Algorithm alg;
-            int item = algChooser.getSelectedIndex();
-            switch(item)
-            {
-            case 0:
-                alg = Line.Algorithm.INTEGRAL;
-                break;
-            case 1:
-                alg = Line.Algorithm.BRESENHAM_FLOAT;
-                break;
-            case 2:
-                alg = Line.Algorithm.BRESENHAM_INTEGRAL;
-                break;
-            case 3:
-                alg = Line.Algorithm.BRESENHAM_LOW_STEP;
-                break;
-            default:
-                alg = Line.Algorithm.INTEGRAL;
-            }
-
-            Color color;
-            item = colorChooser.getSelectedIndex();
-            switch(item)
-            {
-            case 0:
-                color = Color.red;
-                break;
-            case 1:
-                color = Color.orange;
-                break;
-            case 2:
-                color = Color.yellow;
-                break;
-            case 3:
-                color = Color.green;
-                break;
-            case 4:
-                color = Color.cyan;
-                break;
-            case 5:
-                color = Color.blue;
-                break;
-            case 6:
-                color = Color.magenta;
-                break;
-            default:
-                color = Color.BLACK;
-            }
+            Line.Algorithm alg = parseAlg();
+            Color color = parseColor();
 
             addLine(a, b, color, alg);
+        }
+    }
+
+    public class circleListener implements ActionListener
+    {
+
+        @Override
+        public void actionPerformed(ActionEvent e)
+        {
+            try
+            {
+                int radius = Integer.parseInt(radiusBox.getText());
+                double step = Float.parseFloat(angleStepBox.getText());
+                step = Math.toRadians(step);
+                Vertex start = new Vertex(0,0);
+                Line.Algorithm alg = parseAlg();
+                Color color = parseColor();
+                for(float a = 0; a <= Math.PI * 2; a += step)
+                {
+                    double x = radius * Math.cos(a);
+                    double y = radius * Math.sin(a);
+                    Vertex end = new Vertex((int)x, (int) y);
+                    images.add(new Line(start, end, alg, color));
+                }
+                Graphics gr = drawingCanvas.getGraphics();
+                gr.clearRect(0, 0, drawingCanvas.getWidth(), drawingCanvas.getHeight());
+                drawAxises();
+                for(PixImage img : images)
+                {
+                    img.draw(drawingCanvas);
+                }
+            }
+            catch (NumberFormatException ex)
+            {
+                JOptionPane.showMessageDialog(rootPanel, "Некорректный формат ввода");
+                return;
+            }
+
+
+
         }
     }
 
