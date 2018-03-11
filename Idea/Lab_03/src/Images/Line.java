@@ -36,6 +36,23 @@ public class Line extends PixImage
         }
     }
 
+    public int countSteps()
+    {
+        int res = 0;
+        int prevX = Vertexes[0].x;
+        int prevY = Vertexes[0].y;
+        for(int i = 0; i < Vertexes.length; i++)
+        {
+            if(!(prevX == Vertexes[i].x || prevY == Vertexes[i].y))
+            {
+                res++;
+            }
+            prevX = Vertexes[i].x;
+            prevY = Vertexes[i].y;
+        }
+        return res;
+    }
+
     private void buildIntegral(Vertex start, Vertex end)
     {
         float

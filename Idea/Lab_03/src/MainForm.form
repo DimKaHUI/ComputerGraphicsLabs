@@ -3,7 +3,7 @@
   <grid id="27dc6" binding="rootPanel" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="14" y="20" width="890" height="484"/>
+      <xy x="14" y="20" width="890" height="581"/>
     </constraints>
     <properties>
       <minimumSize width="640" height="320"/>
@@ -24,7 +24,7 @@
         <border type="none" title="Изображение"/>
         <children/>
       </grid>
-      <grid id="8d906" layout-manager="GridLayoutManager" row-count="14" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="8d906" layout-manager="GridLayoutManager" row-count="16" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="8" fill="2" indent="0" use-parent-layout="false"/>
@@ -68,7 +68,10 @@
                 <item value="Голубой"/>
                 <item value="Синий"/>
                 <item value="Фиолетовый"/>
+                <item value="Белый"/>
+                <item value="Черный"/>
               </model>
+              <selectedIndex value="8"/>
             </properties>
           </component>
           <component id="d7ff2" class="javax.swing.JLabel">
@@ -175,30 +178,10 @@
           </grid>
           <component id="ce98b" class="javax.swing.JButton" binding="clearButton">
             <constraints>
-              <grid row="13" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="15" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="Очистить"/>
-            </properties>
-          </component>
-          <component id="ce712" class="javax.swing.JComboBox">
-            <constraints>
-              <grid row="5" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <model>
-                <item value="Красный"/>
-                <item value="Оранжевый"/>
-                <item value="Желтый"/>
-                <item value="Зеленый"/>
-                <item value="Голубой"/>
-                <item value="Синий"/>
-                <item value="Фиолетовый"/>
-                <item value="Белый"/>
-                <item value="Черный"/>
-              </model>
-              <popupVisible value="false"/>
-              <selectedIndex value="0"/>
             </properties>
           </component>
           <component id="4dfc2" class="javax.swing.JLabel">
@@ -265,9 +248,53 @@
           </component>
           <vspacer id="b940c">
             <constraints>
-              <grid row="12" column="0" row-span="1" col-span="2" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+              <grid row="14" column="0" row-span="1" col-span="2" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
             </constraints>
           </vspacer>
+          <component id="d115d" class="javax.swing.JButton" binding="applyBackButton">
+            <constraints>
+              <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Применить"/>
+            </properties>
+          </component>
+          <component id="ce712" class="javax.swing.JComboBox" binding="backgroundColorBox">
+            <constraints>
+              <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <model>
+                <item value="Красный"/>
+                <item value="Оранжевый"/>
+                <item value="Желтый"/>
+                <item value="Зеленый"/>
+                <item value="Голубой"/>
+                <item value="Синий"/>
+                <item value="Фиолетовый"/>
+                <item value="Белый"/>
+                <item value="Черный"/>
+              </model>
+              <popupVisible value="false"/>
+              <selectedIndex value="7"/>
+            </properties>
+          </component>
+          <component id="9ec0e" class="javax.swing.JButton" binding="timeCheckerButton">
+            <constraints>
+              <grid row="12" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Сравнение по времени"/>
+            </properties>
+          </component>
+          <component id="71196" class="javax.swing.JButton" binding="stepCountButton">
+            <constraints>
+              <grid row="13" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Исследование ступенчатости"/>
+            </properties>
+          </component>
         </children>
       </grid>
     </children>
