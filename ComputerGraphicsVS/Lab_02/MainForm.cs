@@ -15,7 +15,7 @@ namespace Lab_02
 
             _figure = new Figure(DrawCanvas);
             _history = new History(UndoSteps);
-            UndoInfo.Text = @"Count of undo steps: " + (UndoSteps - 1).ToString();
+            UndoInfo.Text = @"Количество отмен: " + (UndoSteps - 1).ToString();
         }
 
         private void ProceedButt_Click(object sender, EventArgs e)
@@ -40,7 +40,7 @@ namespace Lab_02
             }
             catch (FormatException formatException)
             {
-                MessageBox.Show(@"An error occured while reading input boxes. 
+                MessageBox.Show(@"Возникла ошибка ввода данных. 
 " + formatException.Message, @"I/O ERROR",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }

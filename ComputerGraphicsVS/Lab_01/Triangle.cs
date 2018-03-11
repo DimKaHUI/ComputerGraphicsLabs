@@ -11,6 +11,7 @@ namespace Lab_01
 
         public const int FontSize = 10;
         public const float HeighToWidthCoefficient = 0.70f;
+        public const float CircleAngleFactor = 10.0f;
 
         public double a
         {
@@ -48,7 +49,7 @@ namespace Lab_01
             gr.TranslateTransform(picBox.Width / 2.0f, picBox.Height / 2.0f);
             float prevX = x + r;
             float prevY = y;
-            float angleStep = 1 / r;
+            float angleStep = 1 / r * CircleAngleFactor;
             RotationMatrix2D rot = new RotationMatrix2D(angleStep);
             for (float t = angleStep; t < Math.PI * 2; t += angleStep)
             {
@@ -58,6 +59,8 @@ namespace Lab_01
                 prevX = rotated.X;
                 prevY = rotated.Y;
             }
+            gr.DrawLine(new Pen(Color.Blue), prevX, prevY, x + r, y);
+
         }
 
         public void Draw(PictureBox picBox)

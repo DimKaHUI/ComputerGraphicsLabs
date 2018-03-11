@@ -35,10 +35,10 @@ namespace Lab_02
             _gr.TranslateTransform(picBox.Width / 2.0f, picBox.Height / 2.0f);
 
             // Body
-            _images[0] = new EllipseImage(80, 60, new Pen(Color.Black), 3);
+            _images[0] = new EllipseImage(80, 60, new Pen(Color.Black));
 
             // Head
-            _images[1] = new EllipseImage(20, 20, new Pen(Color.Black), 3);
+            _images[1] = new EllipseImage(20, 20, new Pen(Color.Black));
             _images[1].Translate(-80, 49);
 
             // Nose

@@ -1,30 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Lab_02
 {
     class EllipseImage : Image
     {
 
-        public EllipseImage(float a, float b, Pen pen, float angleStepFactor) : base(pen)
+        public EllipseImage(float a, float b, Pen pen) : base(pen)
         {
-            if (angleStepFactor < 1)
-            {
-                throw new ArgumentException("AngleStepFactor must be equal to 1 or greater");
-            }
-
             float step;
             for (float fi = 0; fi < Math.PI * 2.0f; fi += step)
             {
-                float r = (float)(a * b / Math.Sqrt(Math.Pow(a, 2) * Math.Pow(Math.Sin(fi), 2) +
-                                                                Math.Pow(b, 2) * Math.Pow(Math.Cos(fi), 2)));
-                step = 1 / r * angleStepFactor;
-                float x = (float)(r * Math.Cos(fi));
-                float y = (float)(r * Math.Sin(fi));
+                float sinFi = (float)Math.Sin(fi);
+                float cosFi = (float) Math.Cos(fi);
+                float r = (float)(a * b / Math.Sqrt(a * a * sinFi * sinFi +
+                                                                b * b * cosFi * cosFi));
+                step = 1 / r;
+                float x = (float)(r * cosFi);
+                float y = (float)(r * sinFi);
                 Points.Add(new Vector2(x, y));
             }
         }

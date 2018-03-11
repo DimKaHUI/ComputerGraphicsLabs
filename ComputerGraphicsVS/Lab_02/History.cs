@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 namespace Lab_02
 {
-
     struct Record
     {
         public string Key;
@@ -82,7 +81,6 @@ namespace Lab_02
 
         public bool PrevStep()
         {
-            //MessageBox.Show(_curStep.ToString());
             if (_curStep > _minIndex)
             {
                 _curStep--;
@@ -93,7 +91,6 @@ namespace Lab_02
 
         public bool Revert()
         {
-            //MessageBox.Show(_curStep.ToString());
             if (_curStep < _steps - 1)
             {
                 _curStep++;
