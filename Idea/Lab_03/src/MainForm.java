@@ -29,6 +29,8 @@ public class MainForm extends JFrame
     private JButton timeCheckerButton;
     private JButton stepCountButton;
 
+    private final int STEP_COUNT_LENGTH = 50;
+
     private ArrayList<PixImage> images = new ArrayList<>();
 
     public MainForm()
@@ -66,9 +68,9 @@ public class MainForm extends JFrame
     {
         Graphics gr = drawingCanvas.getGraphics();
         //
-        gr.clearRect(30, 30, drawingCanvas.getWidth() - 50, drawingCanvas.getHeight() - 50);
+        gr.clearRect(0, 0, drawingCanvas.getWidth(), drawingCanvas.getHeight());
         gr.setColor(color);
-        gr.fillRect(30, 30, drawingCanvas.getWidth() - 50, drawingCanvas.getHeight() - 50);
+        gr.fillRect(0, 0, drawingCanvas.getWidth(), drawingCanvas.getHeight());
         //drawingCanvas.setBackground(color);
         drawAxises();
     }
@@ -326,7 +328,7 @@ public class MainForm extends JFrame
         public void actionPerformed(ActionEvent e)
         {
             clearScr(Color.WHITE);
-            int count = drawingCanvas.getWidth() / 2 / 10; // Количество единиц в оси
+            int count = 100;
             float arg_x[] = new float[count];
             float arg_y[] = new float[count];
             double angleStep = 90.0f / count;
@@ -336,8 +338,8 @@ public class MainForm extends JFrame
             {
                 arg_x[i] = (float)angle;
                 angle += angleStep;
-                int x = (int)(100 * Math.cos(Math.toRadians(angle)));
-                int y = (int)(100 * Math.sin(Math.toRadians(angle)));
+                int x = (int)(STEP_COUNT_LENGTH * Math.cos(Math.toRadians(angle)));
+                int y = (int)(STEP_COUNT_LENGTH * Math.sin(Math.toRadians(angle)));
                 Vertex end = new Vertex(x, y);
                 arg_y[i] = new Line(start, end, parseAlg(), parseColor(colorChooser)).countSteps();
             }
@@ -348,12 +350,13 @@ public class MainForm extends JFrame
                 if(arg_y[i] > y_max)
                     y_max = arg_y[i];
 
-            //float y_scale = drawingCanvas.getHeight() / 2 / y_max;
+            float y_scale = drawingCanvas.getHeight() / 2 / y_max;
+            float x_scale = drawingCanvas.getWidth() / 2 / 90;
 
-            Graph graph = new Graph(arg_x, arg_y, 7, 5, 5, Color.RED);
+            Graph graph = new Graph(arg_x, arg_y, x_scale, y_scale, 5, Color.RED);
             graph.draw(drawingCanvas);
             Graphics gr = drawingCanvas.getGraphics();
-            gr.drawString("Длина отрезка: " + 100, drawingCanvas.getWidth() / 2 - 50, drawingCanvas.getHeight() / 2 + 50);
+            gr.drawString("Длина отрезка: " + STEP_COUNT_LENGTH, drawingCanvas.getWidth() / 2 - 50, drawingCanvas.getHeight() / 2 + 50);
         }
     }
 }
