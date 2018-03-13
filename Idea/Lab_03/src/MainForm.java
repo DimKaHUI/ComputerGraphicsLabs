@@ -13,7 +13,7 @@ public class MainForm extends JFrame
 {
     private JPanel rootPanel;
     private JComboBox algChooser;
-    private JPanel drawingPanel;
+    private JPanel drawingCanvas;
     private JButton proceedButton;
     private JTextField ysBox;
     private JTextField xeBox;
@@ -28,7 +28,6 @@ public class MainForm extends JFrame
     private JButton applyBackButton;
     private JButton timeCheckerButton;
     private JButton stepCountButton;
-    private JPanel drawingSpace;
 
     private ArrayList<PixImage> images = new ArrayList<>();
 
@@ -51,10 +50,10 @@ public class MainForm extends JFrame
 
     private void drawAxises()
     {
-        Graphics gr = drawingSpace.getGraphics();
+        Graphics gr = drawingCanvas.getGraphics();
         gr.setColor(Color.lightGray);
-        int height = drawingSpace.getHeight();
-        int width = drawingSpace.getWidth();
+        int height = drawingCanvas.getHeight();
+        int width = drawingCanvas.getWidth();
         gr.translate(width / 2, height / 2);
         gr.drawLine(0, height, 0, -height);
         gr.drawLine(-width, 0, width, 0);
@@ -65,12 +64,12 @@ public class MainForm extends JFrame
 
     private void clearScr(Color color)
     {
-        Graphics gr = drawingSpace.getGraphics();
+        Graphics gr = drawingCanvas.getGraphics();
         //
-        gr.clearRect(0, 0, drawingSpace.getWidth() , drawingSpace.getHeight());
+        gr.clearRect(30, 30, drawingCanvas.getWidth() - 50, drawingCanvas.getHeight() - 50);
         gr.setColor(color);
-        gr.fillRect(0, 0, drawingSpace.getWidth() , drawingSpace.getHeight());
-        //drawingSpace.setBackground(color);
+        gr.fillRect(30, 30, drawingCanvas.getWidth() - 50, drawingCanvas.getHeight() - 50);
+        //drawingCanvas.setBackground(color);
         drawAxises();
     }
 
@@ -80,7 +79,7 @@ public class MainForm extends JFrame
         clearScr(parseColor(backgroundColorBox));
         for(PixImage img : images)
         {
-            img.draw(drawingSpace);
+            img.draw(drawingCanvas);
         }
     }
 
@@ -211,7 +210,7 @@ public class MainForm extends JFrame
                 clearScr(parseColor(backgroundColorBox));
                 for (PixImage img : images)
                 {
-                    img.draw(drawingSpace);
+                    img.draw(drawingCanvas);
                 }
             }
             catch (NumberFormatException ex)
@@ -230,7 +229,7 @@ public class MainForm extends JFrame
         {
             clearScr(parseColor(backgroundColorBox));
             for(PixImage img : images)
-                img.draw(drawingSpace);
+                img.draw(drawingCanvas);
         }
     }
 
@@ -317,7 +316,7 @@ public class MainForm extends JFrame
             values[3] = sec;
 
 
-            Barchart.DrawBarchart(values, new  String[]{"Целочисленный", "Брезенхема (вещ)", "Брезенхема (цел)", "Брезенхема (сглаж)"}, "нс",50, Color.blue, drawingSpace);
+            Barchart.DrawBarchart(values, new  String[]{"Целочисленный", "Брезенхема (вещ)", "Брезенхема (цел)", "Брезенхема (сглаж)"}, "нс",50, Color.blue, drawingCanvas);
         }
     }
 
@@ -327,7 +326,7 @@ public class MainForm extends JFrame
         public void actionPerformed(ActionEvent e)
         {
             clearScr(Color.WHITE);
-            int count = drawingSpace.getWidth() / 2 / 10; // Количество единиц в оси
+            int count = drawingCanvas.getWidth() / 2 / 10; // Количество единиц в оси
             float arg_x[] = new float[count];
             float arg_y[] = new float[count];
             double angleStep = 90.0f / count;
@@ -349,13 +348,12 @@ public class MainForm extends JFrame
                 if(arg_y[i] > y_max)
                     y_max = arg_y[i];
 
-            float y_scale = (drawingSpace.getHeight() - 50) / 2 / y_max;
-            float x_scale = (drawingSpace.getWidth()) / 2 / 90;
+            //float y_scale = drawingCanvas.getHeight() / 2 / y_max;
 
-            Graph graph = new Graph(arg_x, arg_y, x_scale, y_scale, 5, Color.RED);
-            graph.draw(drawingSpace);
-            Graphics gr = drawingSpace.getGraphics();
-            gr.drawString("Длина отрезка: " + 100, drawingSpace.getWidth() / 2 - 50, drawingSpace.getHeight() / 2 + 50);
+            Graph graph = new Graph(arg_x, arg_y, 7, 5, 5, Color.RED);
+            graph.draw(drawingCanvas);
+            Graphics gr = drawingCanvas.getGraphics();
+            gr.drawString("Длина отрезка: " + 100, drawingCanvas.getWidth() / 2 - 50, drawingCanvas.getHeight() / 2 + 50);
         }
     }
 }
