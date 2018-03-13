@@ -67,9 +67,9 @@ public class MainForm extends JFrame
     {
         Graphics gr = drawingSpace.getGraphics();
         //
-        gr.clearRect(30, 30, drawingSpace.getWidth() - 50, drawingSpace.getHeight() - 50);
+        gr.clearRect(0, 0, drawingSpace.getWidth() , drawingSpace.getHeight());
         gr.setColor(color);
-        gr.fillRect(30, 30, drawingSpace.getWidth() - 50, drawingSpace.getHeight() - 50);
+        gr.fillRect(0, 0, drawingSpace.getWidth() , drawingSpace.getHeight());
         //drawingSpace.setBackground(color);
         drawAxises();
     }
@@ -349,8 +349,8 @@ public class MainForm extends JFrame
                 if(arg_y[i] > y_max)
                     y_max = arg_y[i];
 
-            float y_scale = (drawingSpace.getHeight() - 100) / 2 / y_max;
-            float x_scale = (drawingSpace.getWidth() - 50) / 2 / 90;
+            float y_scale = (drawingSpace.getHeight() - 50) / 2 / y_max;
+            float x_scale = (drawingSpace.getWidth()) / 2 / 90;
 
             Graph graph = new Graph(arg_x, arg_y, x_scale, y_scale, 5, Color.RED);
             graph.draw(drawingSpace);
