@@ -45,7 +45,10 @@ public class MainForm extends JFrame
 
         // Displaying UI
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(1600, 1000);
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        setSize(dim.width- 100, dim.height - 100);
+        setTitle("Исследование алгоритмов построения прямых линий");
+
         setContentPane(rootPanel);
         setVisible(true);
     }
