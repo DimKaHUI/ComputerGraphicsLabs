@@ -63,7 +63,7 @@ public class Line extends PixImage
                     buildBresenhamFloat_timed(xp, yp, start, end);
                     break;
                 case BRESENHAM_LOW_STEP:
-
+                    MulticolorLine.buildlowStep_timed(start, end);
                     break;
                 }
                 tmp = System.nanoTime() - tmp;
@@ -283,7 +283,7 @@ public class Line extends PixImage
         }
     }
 
-    private static int sign(int val)
+    public static int sign(int val)
     {
         if(val > 0)
             return 1;

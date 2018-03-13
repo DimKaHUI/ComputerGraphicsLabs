@@ -80,7 +80,10 @@ public class MainForm extends JFrame
 
     private void addLine(Vertex a, Vertex b, Color color, Line.Algorithm alg)
     {
-        images.add(new Line(a, b, alg, color));
+        if(alg != Line.Algorithm.BRESENHAM_LOW_STEP)
+            images.add(new Line(a, b, alg, color));
+        else
+            images.add(new MulticolorLine(a, b, color, parseColor(backgroundColorBox), drawingCanvas));
         clearScr(parseColor(backgroundColorBox));
         for(PixImage img : images)
         {
@@ -186,7 +189,6 @@ public class MainForm extends JFrame
 
             Line.Algorithm alg = parseAlg();
             Color color = parseColor(colorChooser);
-
             addLine(a, b, color, alg);
         }
     }
@@ -210,7 +212,10 @@ public class MainForm extends JFrame
                     double x = radius * Math.cos(a);
                     double y = radius * Math.sin(a);
                     Vertex end = new Vertex((int) x, (int) y);
-                    images.add(new Line(start, end, alg, color));
+                    if(alg != Line.Algorithm.BRESENHAM_LOW_STEP)
+                        images.add(new Line(start, end, alg, color));
+                    else
+                        images.add(new MulticolorLine(start, end, color, parseColor(backgroundColorBox), drawingCanvas));
                 }
                 clearScr(parseColor(backgroundColorBox));
                 for (PixImage img : images)
@@ -274,7 +279,11 @@ public class MainForm extends JFrame
                 int x = (int)(STEP_COUNT_LENGTH * Math.cos(Math.toRadians(angle)));
                 int y = (int)(STEP_COUNT_LENGTH * Math.sin(Math.toRadians(angle)));
                 Vertex end = new Vertex(x, y);
+                Line.Algorithm alg = parseAlg();
+                if(alg != Line.Algorithm.BRESENHAM_LOW_STEP)
                 arg_y[i] = new Line(start, end, parseAlg(), parseColor(colorChooser)).countSteps();
+                else
+                    arg_y[i] = 0;
             }
 
             // Finding maximum
