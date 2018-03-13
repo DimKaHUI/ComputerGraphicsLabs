@@ -271,10 +271,6 @@ paket-files/
 # FAKE - F# Make
 .fake/
 
-# JetBrains Rider
-.idea/
-*.sln.iml
-
 # CodeRush
 .cr/
 
@@ -300,6 +296,10 @@ __pycache__/
 
 
 ## JAVA Gitignore
+
+# Compiled Idea project
+
+*out/
 
 # Compiled class file
 *.class
