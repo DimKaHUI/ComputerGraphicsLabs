@@ -243,80 +243,10 @@ public class MainForm extends JFrame
             long values[] = new long[4];
             clearScr(Color.WHITE);
 
-            long sec;
-
-            sec = 0;
-            for(int i = 0; i < 10000; i ++)
-            {
-                double angleStep = 0.1;
-                Vertex start = new Vertex(0, 0);
-                for(double j = 0; j < Math.PI * 2; j += angleStep )
-                {
-                    int x = (int) (100 * Math.cos(j));
-                    int y = (int) (100 * Math.sin(j));
-                    Vertex end = new Vertex(x, y);
-                    long tmp = System.nanoTime();
-                    new Line(start, end, Line.Algorithm.INTEGRAL, Color.BLACK);
-                    tmp = System.nanoTime() - tmp;
-                    sec += tmp;
-                }
-            }
-            values[0] = sec;
-
-            sec = 0;
-            for(int i = 0; i < 10000; i ++)
-            {
-                double angleStep = 0.1;
-                Vertex start = new Vertex(0, 0);
-                for(double j = 0; j < Math.PI * 2; j += angleStep )
-                {
-                    int x = (int) (100 * Math.cos(j));
-                    int y = (int) (100 * Math.sin(j));
-                    Vertex end = new Vertex(x, y);
-                    long tmp = System.nanoTime();
-                    new Line(start, end, Line.Algorithm.BRESENHAM_FLOAT, Color.BLACK);
-                    tmp = System.nanoTime() - tmp;
-                    sec += tmp;
-                }
-            }
-            values[1] = sec;
-
-            sec = 0;
-            for(int i = 0; i < 10000; i ++)
-            {
-                double angleStep = 0.1;
-                Vertex start = new Vertex(0, 0);
-                for(double j = 0; j < Math.PI * 2; j += angleStep )
-                {
-                    int x = (int) (100 * Math.cos(j));
-                    int y = (int) (100 * Math.sin(j));
-                    Vertex end = new Vertex(x, y);
-                    long tmp = System.nanoTime();
-                    new Line(start, end, Line.Algorithm.BRESENHAM_INTEGRAL, Color.BLACK);
-                    tmp = System.nanoTime() - tmp;
-                    sec += tmp;
-                }
-            }
-            values[2] = sec;
-
-            sec = 0;
-            for(int i = 0; i < 10000; i ++)
-            {
-                double angleStep = 0.1;
-                Vertex start = new Vertex(0, 0);
-                for(double j = 0; j < Math.PI * 2; j += angleStep )
-                {
-                    int x = (int) (100 * Math.cos(j));
-                    int y = (int) (100 * Math.sin(j));
-                    Vertex end = new Vertex(x, y);
-                    long tmp = System.nanoTime();
-                    new Line(start, end, Line.Algorithm.BRESENHAM_LOW_STEP, Color.BLACK);
-                    tmp = System.nanoTime() - tmp;
-                    sec += tmp;
-                }
-            }
-            values[3] = sec;
-
+            values[0] = Line.GetTime(Line.Algorithm.INTEGRAL);
+            values[1] = Line.GetTime(Line.Algorithm.BRESENHAM_FLOAT);
+            values[2] = Line.GetTime(Line.Algorithm.BRESENHAM_INTEGRAL);
+            values[3] = Line.GetTime(Line.Algorithm.BRESENHAM_LOW_STEP);
 
             Barchart.DrawBarchart(values, new  String[]{"Целочисленный", "Брезенхема (вещ)", "Брезенхема (цел)", "Брезенхема (сглаж)"}, "нс",50, Color.blue, drawingCanvas);
         }
