@@ -4,6 +4,8 @@ import java.awt.*;
 
 public class PixImage
 {
+    public static int PixelSize = 4;
+
     protected Vertex[] Vertexes;
     protected Color Color = java.awt.Color.BLACK;
 
@@ -21,7 +23,9 @@ public class PixImage
         {
             if(vertex == null)
                 continue;
-            gr.drawOval(vertex.x - 1, -(vertex.y + 1), 1, 1);
+            int x = PixelSize * vertex.x;
+            int y = PixelSize * vertex.y;
+            gr.fillOval(x - PixelSize / 2, -(y + PixelSize / 2), PixelSize, PixelSize);
         }
     }
 }

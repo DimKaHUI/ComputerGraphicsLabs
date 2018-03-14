@@ -31,6 +31,7 @@
                 <item value="Брезенхема (вещественный)"/>
                 <item value="Брезенхема (целый)"/>
                 <item value="Брезенхема (сглаживание ступеней)"/>
+                <item value="Библиотечный"/>
               </model>
             </properties>
           </component>

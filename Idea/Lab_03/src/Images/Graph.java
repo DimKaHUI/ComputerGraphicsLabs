@@ -73,7 +73,7 @@ public class Graph
         {
             int x = (int)(x_pnt[i] * x_scale);
             int y = (int)(y_pnt[i] * y_scale);
-            gr.fillOval(x - pointSize/2, -(y-pointSize/2), pointSize, pointSize);
+            gr.fillOval(x - pointSize/2, -(y+pointSize/2), pointSize, pointSize);
         }
     }
 }
