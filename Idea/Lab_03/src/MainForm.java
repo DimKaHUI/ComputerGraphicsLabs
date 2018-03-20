@@ -30,6 +30,7 @@ public class MainForm extends JFrame
     private JButton stepCountButton;
 
     private final int STEP_COUNT_LENGTH = 50;
+    private final int INTENSE_LEVELS  = 8;
 
     private ArrayList<PixImage> images = new ArrayList<>();
 
@@ -83,7 +84,7 @@ public class MainForm extends JFrame
         if(alg != Line.Algorithm.BRESENHAM_LOW_STEP)
             images.add(new Line(a, b, alg, color));
         else
-            images.add(new MulticolorLine(a, b, color, parseColor(backgroundColorBox), drawingCanvas));
+            images.add(new MulticolorLine(a, b, color, parseColor(backgroundColorBox), drawingCanvas, INTENSE_LEVELS));
         clearScr(parseColor(backgroundColorBox));
         for(PixImage img : images)
         {
@@ -215,7 +216,7 @@ public class MainForm extends JFrame
                     if(alg != Line.Algorithm.BRESENHAM_LOW_STEP)
                         images.add(new Line(start, end, alg, color));
                     else
-                        images.add(new MulticolorLine(start, end, color, parseColor(backgroundColorBox), drawingCanvas));
+                        images.add(new MulticolorLine(start, end, color, parseColor(backgroundColorBox), drawingCanvas, INTENSE_LEVELS));
                 }
                 clearScr(parseColor(backgroundColorBox));
                 for (PixImage img : images)

@@ -8,8 +8,9 @@ public class MulticolorLine extends PixImage
     private Color back;
     private Graphics gr;
     private Vertex start, end;
+    private int levels;
 
-    public MulticolorLine(Vertex start, Vertex end,  Color baseColor, Color backColor, Container canvas)
+    public MulticolorLine(Vertex start, Vertex end,  Color baseColor, Color backColor, Container canvas, int levels)
     {
         base = baseColor;
         back = backColor;
@@ -18,18 +19,9 @@ public class MulticolorLine extends PixImage
 
         gr = canvas.getGraphics();
         gr.translate(canvas.getWidth() / 2, canvas.getHeight() / 2);
+        this.levels = levels;
     }
 
-    private Color calculateIntensity(float c)
-    {
-        float r = base.getRed();
-        float g = base.getGreen();
-        float b = base.getBlue();
-        r += (1-c) * (back.getRed() - r);
-        g += (1-c) * (back.getGreen() - g);
-        b += (1-c) * (back.getBlue() - b);
-        return new Color(r, g, b);
-    }
 
     private void plot(int x, int y, float c)
     {
@@ -40,7 +32,10 @@ public class MulticolorLine extends PixImage
         g += (1-c) * (back.getGreen() - g);
         b += (1-c) * (back.getBlue() - b);
 
-        gr.setColor(new Color(r, g, b));
+        if(c <= 1)
+            gr.setColor(new Color(r, g, b));
+        else
+            gr.setColor(base);
         gr.drawOval(x - 1, -y - 1, 1, 1);
     }
 
@@ -72,7 +67,7 @@ public class MulticolorLine extends PixImage
     }
 
     @Override
-    public void draw(Container canvas)
+    /*public void draw(Container canvas)
     {
         int x0 = start.x;
         int x1 = end.x;
@@ -127,6 +122,55 @@ public class MulticolorLine extends PixImage
             }
             y += gradient;
         }
+    }*/
+
+    public void draw(Container canvas)
+    {
+        int x = start.x;
+        int y = start.y;
+
+        int dx = end.x - start.x;
+        int dy = end.y - start.y;
+
+        int sx = (int)Math.signum(dx);
+        int sy = (int)Math.signum(dy);
+        dx = Math.abs(dx);
+        dy = Math.abs(dy);
+
+        int fl = 0;
+
+        if (dy > dx)
+        {
+            fl = 1;
+            int tmp = dx;
+            dx = dy;
+            dy = tmp;
+        }
+
+        float f = (float)levels / 2.0f;
+        float m = (float)levels * ((float)dy / (float)dx);
+        float w = (float)levels - m;
+
+        for(int i = 0; i < dx; i++)
+        {
+            plot(x, y, f / (float)levels);
+            if(f < w)
+            {
+                if (fl == 0)
+                    x += sx;
+                else
+                    y += sy;
+                f += m;
+            }
+            else
+            {
+                y += sy;
+                x += sx;
+                f -= w;
+            }
+
+        }
+
     }
 
     public static void buildlowStep_timed(Vertex start, Vertex end)
