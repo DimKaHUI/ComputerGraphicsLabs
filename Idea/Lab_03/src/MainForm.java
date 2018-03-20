@@ -137,20 +137,23 @@ public class MainForm extends JFrame
         int item = algChooser.getSelectedIndex();
         switch(item)
         {
-        case 0:
-            alg = Line.Algorithm.INTEGRAL;
-            break;
-        case 1:
-            alg = Line.Algorithm.BRESENHAM_FLOAT;
-            break;
-        case 2:
-            alg = Line.Algorithm.BRESENHAM_INTEGRAL;
-            break;
-        case 3:
-            alg = Line.Algorithm.BRESENHAM_LOW_STEP;
-            break;
-        default:
-            alg = Line.Algorithm.INTEGRAL;
+            case 0:
+                alg = Line.Algorithm.INTEGRAL;
+                break;
+            case 1:
+                alg = Line.Algorithm.BRESENHAM_FLOAT;
+                break;
+            case 2:
+                alg = Line.Algorithm.BRESENHAM_INTEGRAL;
+                break;
+            case 3:
+                alg = Line.Algorithm.BRESENHAM_LOW_STEP;
+                break;
+            case 4:
+                alg = Line.Algorithm.LIB;
+                break;
+            default:
+                alg = Line.Algorithm.INTEGRAL;
         }
         return alg;
     }

@@ -22,7 +22,6 @@ public class MulticolorLine extends PixImage
         this.levels = levels;
     }
 
-
     private void plot(int x, int y, float c)
     {
         int r = base.getRed();
@@ -37,6 +36,7 @@ public class MulticolorLine extends PixImage
         else
             gr.setColor(base);
         gr.drawOval(x - 1, -y - 1, 1, 1);
+        y = PixImage.PixelSize * y;
     }
 
     private static void plot_timed(int x, int y, float c)

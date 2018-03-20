@@ -6,11 +6,15 @@ public class Line extends PixImage
 {
     public enum Algorithm
     {
-        INTEGRAL, BRESENHAM_INTEGRAL, BRESENHAM_FLOAT, BRESENHAM_LOW_STEP
+        INTEGRAL, BRESENHAM_INTEGRAL, BRESENHAM_FLOAT, BRESENHAM_LOW_STEP, LIB
     }
+
+    private Algorithm alg;
+    private Vertex a, b;
 
     public Line(Vertex start, Vertex end, Algorithm alg, Color color)
     {
+        this.alg = alg;
         Color = color;
         if(start.compare(end))
         {
@@ -30,9 +34,24 @@ public class Line extends PixImage
         case BRESENHAM_FLOAT:
             buildBresenhamFloat(start, end);
             break;
-        case BRESENHAM_LOW_STEP:
-
+        case LIB:
+            a = start;
+            b = end;
             break;
+        }
+    }
+
+    @Override
+    public void draw(Container canvas)
+    {
+        if(alg != Algorithm.LIB)
+            super.draw(canvas);
+        else
+        {
+            Graphics gr = canvas.getGraphics();
+            gr.translate(canvas.getWidth() / 2, canvas.getHeight() / 2);
+            gr.setColor(Color);
+            gr.drawLine(a.x, a.y, b.x, b.y);
         }
     }
 
