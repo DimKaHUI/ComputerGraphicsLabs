@@ -18,7 +18,7 @@ public class MulticolorLine extends PixImage
         this.end = end;
 
         gr = canvas.getGraphics();
-        gr.translate(canvas.getWidth() / 2, canvas.getHeight() / 2);
+        //gr.translate(canvas.getWidth() / 2, canvas.getHeight() / 2);
         this.levels = levels;
     }
     private void plot(int x, int y, float c)
@@ -38,10 +38,11 @@ public class MulticolorLine extends PixImage
         gr.setColor(new Color(r, g, b));
         x = PixImage.PixelSize * x;
         y = PixImage.PixelSize * y;
-        gr.fillOval(x - PixImage.PixelSize / 2, -y - PixImage.PixelSize / 2, PixImage.PixelSize, PixImage.PixelSize);
+        //gr.fillOval(x - PixImage.PixelSize / 2, -y - PixImage.PixelSize / 2, PixImage.PixelSize, PixImage.PixelSize);
+        gr.drawLine(x, y, x, y);
     }
 
-    private static void plot_timed(int x, int y, float c)
+    private static void plot_timed(int x, int y, float c, int[] xp, int[] yp)
     {
         int r = 0;
         int g = 0;
@@ -49,6 +50,9 @@ public class MulticolorLine extends PixImage
         r += (1-c) * (255 - r);
         g += (1-c) * (255 - g);
         b += (1-c) * (255 - b);
+        new Color(r, g, b);
+        xp[0] = x;
+        yp[0] = y;
     }
 
     private static int ipart(float x)
@@ -68,64 +72,6 @@ public class MulticolorLine extends PixImage
         return -1;
     }
 
-    @Override
-    /*public void draw(Container canvas)
-    {
-        int x0 = start.x;
-        int x1 = end.x;
-        int y0 = start.y;
-        int y1 = end.y;
-        boolean steep = Math.abs(y1 - y0) > Math.abs(x1 - x0);
-        if(steep)
-        {
-            int t = y0;
-            y0 = x0;
-            x0 = t;
-            t = y1;
-            y1 = x1;
-            x1 = t;
-        }
-        if(x0 > x1)
-        {
-            int t = x1;
-            x1 = x0;
-            x0 = t;
-            t = y1;
-            y1 = y0;
-            y0 = t;
-        }
-
-        if(steep)
-        {
-            plot(x0, y0, 1);
-            plot(x1, y1, 1);
-        }
-        else
-        {
-            plot(y0, x0, 1);
-            plot(y1, x1, 1);
-        }
-
-        float dx = x1 - x0;
-        float dy = y1 - y0;
-        float gradient = dy/dx;
-        float y = y0 + gradient;
-        for(int x = x0 + 1; x < x1-1; x++)
-        {
-            if(steep)
-            {
-                plot(x, (int)y, 1 - fpart(y));
-                plot(x, (int)y + sign1(y), fpart(y));
-            }
-            else
-            {
-                plot((int)y, x, 1 - fpart(y));
-                plot((int)y + sign1(y), x, fpart(y));
-            }
-            y += gradient;
-        }
-    }*/
-
     public void draw(Container canvas)
     {
         int x = start.x;
@@ -133,6 +79,12 @@ public class MulticolorLine extends PixImage
 
         int dx = end.x - start.x;
         int dy = end.y - start.y;
+
+        if(dx == 0 && dy == 0)
+        {
+            plot(x, y, 1);
+            return;
+        }
 
         int sx = (int)Math.signum(dx);
         int sy = (int)Math.signum(dy);
@@ -175,60 +127,58 @@ public class MulticolorLine extends PixImage
 
     }
 
-    public static void buildlowStep_timed(Vertex start, Vertex end)
+    public static void buildlowStep_timed(int[] xp, int[] yp, Vertex start, Vertex end)
     {
-        int x0 = start.x;
-        int x1 = end.x;
-        int y0 = start.y;
-        int y1 = end.y;
-        boolean steep = Math.abs(y1 - y0) > Math.abs(x1 - x0);
-        if(steep)
+        int x = start.x;
+        int y = start.y;
+
+        int dx = end.x - start.x;
+        int dy = end.y - start.y;
+
+        if(dx == 0 && dy == 0)
         {
-            int t = y0;
-            y0 = x0;
-            x0 = t;
-            t = y1;
-            y1 = x1;
-            x1 = t;
-        }
-        if(x0 > x1)
-        {
-            int t = x1;
-            x1 = x0;
-            x0 = t;
-            t = y1;
-            y1 = y0;
-            y0 = t;
+            plot_timed(x, y, 1, xp, yp);
+            return;
         }
 
-        if(steep)
+        int sx = (int)Math.signum(dx);
+        int sy = (int)Math.signum(dy);
+        dx = Math.abs(dx);
+        dy = Math.abs(dy);
+
+        int fl = 0;
+
+        if (dy > dx)
         {
-            plot_timed(x0, y0, 1);
-            plot_timed(x1, y1, 1);
-        }
-        else
-        {
-            plot_timed(y0, x0, 1);
-            plot_timed(y1, x1, 1);
+            fl = 1;
+            int tmp = dx;
+            dx = dy;
+            dy = tmp;
         }
 
-        float dx = x1 - x0;
-        float dy = y1 - y0;
-        float gradient = dy/dx;
-        float y = y0 + gradient;
-        for(int x = x0 + 1; x < x1-1; x++)
+        float f = (float)8 / 2.0f;
+        float m = (float)8 * ((float)dy / (float)dx);
+        float w = (float)8 - m;
+
+        for(int i = 0; i < dx; i++)
         {
-            if(steep)
+            plot_timed(x, y, f / (float)8, xp, yp);
+            if(f < w)
             {
-                plot_timed(x, (int)y, 1 - fpart(y));
-                plot_timed(x, (int)y + sign1(y), fpart(y));
+                if (fl == 0)
+                    x += sx;
+                else
+                    y += sy;
+                f += m;
             }
             else
             {
-                plot_timed((int)y, x, 1 - fpart(y));
-                plot_timed((int)y + sign1(y), x, fpart(y));
+                y += sy;
+                x += sx;
+                f -= w;
             }
-            y += gradient;
+
         }
+
     }
 }

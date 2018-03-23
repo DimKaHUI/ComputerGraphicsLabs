@@ -82,7 +82,7 @@ public class Line extends PixImage
                     buildBresenhamFloat_timed(xp, yp, start, end);
                     break;
                 case BRESENHAM_LOW_STEP:
-                    MulticolorLine.buildlowStep_timed(start, end);
+                    MulticolorLine.buildlowStep_timed(xp, yp, start, end);
                     break;
                 }
                 tmp = System.nanoTime() - tmp;
@@ -298,7 +298,7 @@ public class Line extends PixImage
         {
             x += sx;
             y += sy;
-            Vertexes[i] = new Vertex((int)x, (int)y);
+            Vertexes[i] = new Vertex((int)Math.floor(x), (int)Math.floor(y));
         }
     }
 
@@ -324,38 +324,37 @@ public class Line extends PixImage
         boolean exchange = false;
         dy = Math.abs(dy);
         dx = Math.abs(dx);
-        if(dy > dx)
+        if (dy > dx)
         {
             int t = dy;
             dy = dx;
             dx = t;
             exchange = true;
         }
-        float m = (float)dy/dx;
-        float e = 0;
+        float m = (float) dy / dx;
+        float e = 0.5f;
 
-        if(!exchange)
+        if (!exchange)
         {
             Vertexes = new Vertex[dx];
-            for(int i = 0; x != b.x; x += sx, i++)
+            for (int i = 0; x != b.x; x += sx, i++)
             {
                 Vertexes[i] = new Vertex(x, y);
                 e += m;
-                if(e >= 0.5)
+                if (e >= 0.5)
                 {
                     y += sy;
                     e -= 1.0f;
                 }
             }
-        }
-        else
+        } else
         {
             Vertexes = new Vertex[dx];
-            for(int i = 0; y != b.y; y += sy, i++)
+            for (int i = 0; y != b.y; y += sy, i++)
             {
                 Vertexes[i] = new Vertex(x, y);
                 e += m;
-                if(e >= 0.5)
+                if (e >= 0.5)
                 {
                     x += sx;
                     e -= 1.0f;

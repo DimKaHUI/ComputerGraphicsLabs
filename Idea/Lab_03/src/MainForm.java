@@ -76,7 +76,7 @@ public class MainForm extends JFrame
         gr.setColor(color);
         gr.fillRect(0, 0, drawingCanvas.getWidth(), drawingCanvas.getHeight());
         //drawingCanvas.setBackground(color);
-        drawAxises();
+        //drawAxises();
     }
 
     private void addLine(Vertex a, Vertex b, Color color, Line.Algorithm alg)
@@ -216,10 +216,13 @@ public class MainForm extends JFrame
                     double x = radius * Math.cos(a);
                     double y = radius * Math.sin(a);
                     Vertex end = new Vertex((int) x, (int) y);
+                    Vertex start_a = new Vertex(start.x + drawingCanvas.getWidth() / 2, start.y + drawingCanvas.getHeight() / 2);
+                    Vertex end_a = new Vertex(end.x + drawingCanvas.getWidth() / 2, end.y + drawingCanvas.getHeight() / 2);
+
                     if(alg != Line.Algorithm.BRESENHAM_LOW_STEP)
-                        images.add(new Line(start, end, alg, color));
+                        images.add(new Line(start_a, end_a, alg, color));
                     else
-                        images.add(new MulticolorLine(start, end, color, parseColor(backgroundColorBox), drawingCanvas, INTENSE_LEVELS));
+                        images.add(new MulticolorLine(start_a, end_a, color, parseColor(backgroundColorBox), drawingCanvas, INTENSE_LEVELS));
                 }
                 clearScr(parseColor(backgroundColorBox));
                 for (PixImage img : images)
