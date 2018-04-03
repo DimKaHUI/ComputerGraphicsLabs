@@ -70,7 +70,7 @@ namespace Lab_04
             row = IntRound(b);
             col = 0;
 
-            int d = aa2 * ((row - 1) * row) +aa + bb2 * (1 - aa);
+            int d = aa2 * ((row - 1) * row) + aa + bb2 * (1 - aa);
             while (aa * (row) > bb * col)
             {
                 verts.Add(new Vertex2D(center.X + col, center.Y + row));
@@ -88,6 +88,9 @@ namespace Lab_04
             }
 
             d = bb2 * (col + 1) * col + aa2 * (row * (row - 2) + 1) + (1 - aa2) * bb;
+            //d = bb * (col * col + 1) * (col * col + 1) +
+               // aa4 * (row * row + 1) * (row * row + 1) -
+               // aa4 * bb;
             while ((row) + 1 != 0)
             {
                 verts.Add(new Vertex2D(center.X + col, center.Y + row));
@@ -98,6 +101,7 @@ namespace Lab_04
                 {
                     col++;
                     d += bb4 * col;
+                    //d +=
                 }
                 row--;
                 d += aa2 * (3 - (row * 2));
@@ -191,7 +195,6 @@ namespace Lab_04
                     break;
                 case Algorithm.Library:
                     return new AutoEllipse(center, a * 2, b * 2, color);
-                    break;
                 default:
                     throw new ArgumentOutOfRangeException("alg", alg, null);
             }

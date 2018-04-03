@@ -425,7 +425,7 @@
             this.EllipseYBox.Name = "EllipseYBox";
             this.EllipseYBox.Size = new System.Drawing.Size(41, 20);
             this.EllipseYBox.TabIndex = 4;
-            this.EllipseYBox.Text = "100";
+            this.EllipseYBox.Text = "200";
             // 
             // label14
             // 
@@ -442,7 +442,7 @@
             this.EllipseXBox.Name = "EllipseXBox";
             this.EllipseXBox.Size = new System.Drawing.Size(41, 20);
             this.EllipseXBox.TabIndex = 2;
-            this.EllipseXBox.Text = "100";
+            this.EllipseXBox.Text = "200";
             // 
             // label15
             // 
@@ -494,7 +494,7 @@
             this.EllipseABox.Name = "EllipseABox";
             this.EllipseABox.Size = new System.Drawing.Size(41, 20);
             this.EllipseABox.TabIndex = 7;
-            this.EllipseABox.Text = "60";
+            this.EllipseABox.Text = "120";
             // 
             // MainForm
             // 
