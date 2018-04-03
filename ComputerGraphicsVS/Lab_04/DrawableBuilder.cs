@@ -112,8 +112,6 @@ namespace Lab_04
             a = b;
             b = tmp;
 
-            // Right bottom
-            List<Vertex2D> arc = new List<Vertex2D>();
             int x, y;
             double d;
             double
