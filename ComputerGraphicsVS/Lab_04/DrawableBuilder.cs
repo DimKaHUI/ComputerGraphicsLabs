@@ -18,10 +18,9 @@ namespace Lab_04
 
     class DrawableBuilder
     {
-        private static int IntFloor(double val)
+        private static int IntRound(double val)
         {
             return (int) Math.Round(val);
-            //return (int) val;
         }
 
         private static void UseCanonic(List<Vertex2D> verts, Vertex2D center, float a, float b)
@@ -29,26 +28,15 @@ namespace Lab_04
             for (float x = center.X - a; x < center.Y + a; x++)
             {
                 double y = Math.Sqrt(b * b * (1 - (x - center.X) * (x - center.X) / (a * a))) + center.Y;
-                verts.Add(new Vertex2D(IntFloor(x), IntFloor(y)));
+                verts.Add(new Vertex2D(IntRound(x), IntRound(y)));
             }
 
             for (float x = center.X - a; x < center.Y + a; x++)
             {
                 double y = -Math.Sqrt(b * b * (1 - (x - center.X) * (x - center.X) / (a * a))) + center.Y;
-                verts.Add(new Vertex2D(IntFloor(x), IntFloor(y)));
+                verts.Add(new Vertex2D(IntRound(x), IntRound(y)));
             }
 
-        }
-
-        private static void WriteFigureLog(List<Vertex2D> verts)
-        {
-            string[] data = new string[verts.Count];
-            for (int i = 0; i < verts.Count; i++)
-            {
-                data[i] = verts[i].ToString();
-            }
-
-            File.WriteAllLines("log.txt", data);
         }
 
         private static void UseParametric(List<Vertex2D> verts, Vertex2D center, float a, float b)
@@ -63,23 +51,23 @@ namespace Lab_04
                 double cost = Math.Cos(t);
                 double cost2 = cost * cost;
                 double p = a * b / Math.Sqrt(a2 * sint2 + b2 * cost2);
-                verts.Add(new Vertex2D(center.X + IntFloor(p * cost), center.Y + IntFloor(p * sint)));
+                verts.Add(new Vertex2D(center.X + IntRound(p * cost), center.Y + IntRound(p * sint)));
             }
             
         }
 
         private static void UseBrezenghem(List<Vertex2D> verts, Vertex2D center, float a, float b)
         {
-            int col, i, row, bnew;
+            int col, row;
             int aa, bb, aa2, bb2, aa4, bb4;
-            bb = IntFloor(b * b);
-            aa = IntFloor(a * a);
+            bb = IntRound(b * b);
+            aa = IntRound(a * a);
             aa2 = aa + aa;
             bb2 = bb + bb;
             aa4 = aa2 + aa2;
             bb4 = bb2 + bb2;
 
-            row = IntFloor(b);
+            row = IntRound(b);
             col = 0;
 
             int d = aa2 * ((row - 1) * row) +aa + bb2 * (1 - aa);
@@ -135,7 +123,7 @@ namespace Lab_04
                 b2b = 2 * b2;
 
             x = 0;
-            y = IntFloor(a);
+            y = IntRound(a);
             d = a2 + b2 *(-a + 0.25f);
             while (b2 * (y - 0.5f) > a2 * x)
             {
@@ -150,11 +138,14 @@ namespace Lab_04
                     x++;
                     y--;
                 }
-                arc.Add(new Vertex2D(x, y));
+                verts.Add(new Vertex2D(center.X + x, center.Y + y));
+                verts.Add(new Vertex2D(center.X + x, center.Y - y));
+                verts.Add(new Vertex2D(center.X - x, center.Y + y));
+                verts.Add(new Vertex2D(center.X - x, center.Y - y));
             }
 
             d = b2 + a2 * (-b + 0.25f);
-            x = IntFloor(b);
+            x = IntRound(b);
             y = 0;
             double st = Math.Sqrt(a2 + b2);
             while ((b2 * (y - 0.5) <= a2 * x) && (x >= b2 / st) && (y <= a2 / st))
@@ -170,67 +161,22 @@ namespace Lab_04
                     y++;
                     x--;
                 }
-                arc.Add(new Vertex2D(x, y));
+                verts.Add(new Vertex2D(center.X + x, center.Y + y));
+                verts.Add(new Vertex2D(center.X + x, center.Y - y));
+                verts.Add(new Vertex2D(center.X - x, center.Y + y));
+                verts.Add(new Vertex2D(center.X - x, center.Y - y));
             }
 
-            int count = arc.Count;
-
-            for (int i = 0; i < count; i++)
-            {
-                Vertex2D v = arc[i];
-                v.X = -v.X;
-                arc.Add(v);
-            }
-
-            count += count;
-            for (int i = 0; i < count; i++)
-            {
-                Vertex2D v = arc[i];
-                v.Y = -v.Y;
-                arc.Add(v);
-            }
-
-            for (int i = 0; i < arc.Count; i++)
-            {
-                verts.Add(new Vertex2D(center.X + arc[i].X, center.Y + arc[i].Y));
-            }
         }
 
         public static IDrawable BuildCircle(Vertex2D center, int radius, Color color, Algorithm alg)
         {
-            List<Vertex2D> verts = new List<Vertex2D>();
-            Image res;
-            switch (alg)
-            {
-                case Algorithm.Canonic:
-                    UseCanonic(verts, center, radius, radius);
-                    break;
-                case Algorithm.Parametric:
-                    UseParametric(verts, center, radius, radius);
-                    break;
-                case Algorithm.Brezehghem:
-                    UseBrezenghem(verts, center, radius, radius);
-                    break;
-                case Algorithm.MiddlePoint:
-                    UseMiddlepoint(verts, center, radius, radius);
-                    break;
-                case Algorithm.Library:
-                    return new AutoEllipse(center, radius * 2, radius * 2, color);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException("alg", alg, null);
-            }
-
-            //WriteFigureLog(verts);
-
-            res = new Image(verts.ToArray(), color);
-            return res;
+            return BuildEllipse(center, radius, radius, color, alg);
         }
 
         public static IDrawable BuildEllipse(Vertex2D center, float a, float b, Color color, Algorithm alg)
         {
             List<Vertex2D> verts = new List<Vertex2D>();
-            Image res;
             switch (alg)
             {
                 case Algorithm.Canonic:
@@ -254,7 +200,7 @@ namespace Lab_04
 
             //WriteFigureLog(verts);
 
-            res = new Image(verts.ToArray(), color);
+            var res = new Image(verts.ToArray(), color);
             return res;
         }
     }
