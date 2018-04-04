@@ -25,18 +25,32 @@ namespace Lab_04
 
         private static void UseCanonic(List<Vertex2D> verts, Vertex2D center, float a, float b)
         {
-            for (float x = center.X - a; x < center.Y + a; x++)
+            double bb = b * b;
+            double aa = a * a;
+            for (float x = 0; x < a; x++)
             {
-                double y = Math.Sqrt(b * b * (1 - (x - center.X) * (x - center.X) / (a * a))) + center.Y;
-                verts.Add(new Vertex2D(IntRound(x), IntRound(y)));
+                double hx2 = (x) * (x);
+                double y = Math.Sqrt(bb * (1 - hx2 / aa));
+                int resX = IntRound(x);
+                int resY = IntRound(y);
+
+                verts.Add(new Vertex2D(center.X + resX, center.Y + resY));
+                verts.Add(new Vertex2D(center.X + resX, center.Y - resY));
+                verts.Add(new Vertex2D(center.X - resX, center.Y + resY));
+                verts.Add(new Vertex2D(center.X - resX, center.Y - resY));                
             }
 
-            for (float x = center.X - a; x < center.Y + a; x++)
+            for (float y = 0; y < b / 1.5f; y++)
             {
-                double y = -Math.Sqrt(b * b * (1 - (x - center.X) * (x - center.X) / (a * a))) + center.Y;
-                verts.Add(new Vertex2D(IntRound(x), IntRound(y)));
+                double hy2 = (y) * (y);
+                double x = Math.Sqrt(aa * (1 - hy2 / bb));
+                int resX = IntRound(x);
+                int resY = IntRound(y);
+                verts.Add(new Vertex2D(center.X + resX, center.Y + resY));
+                verts.Add(new Vertex2D(center.X + resX, center.Y - resY));
+                verts.Add(new Vertex2D(center.X - resX, center.Y + resY));
+                verts.Add(new Vertex2D(center.X - resX, center.Y - resY));
             }
-
         }
 
         private static void UseParametric(List<Vertex2D> verts, Vertex2D center, float a, float b)
@@ -51,7 +65,9 @@ namespace Lab_04
                 double cost = Math.Cos(t);
                 double cost2 = cost * cost;
                 double p = a * b / Math.Sqrt(a2 * sint2 + b2 * cost2);
-                verts.Add(new Vertex2D(center.X + IntRound(p * cost), center.Y + IntRound(p * sint)));
+                int xRes = IntRound(p * cost);
+                int yRes = IntRound(p * sint);
+                verts.Add(new Vertex2D(center.X + xRes, center.Y + yRes));
             }
             
         }
@@ -88,9 +104,7 @@ namespace Lab_04
             }
 
             d = bb2 * (col + 1) * col + aa2 * (row * (row - 2) + 1) + (1 - aa2) * bb;
-            //d = bb * (col * col + 1) * (col * col + 1) +
-               // aa4 * (row * row + 1) * (row * row + 1) -
-               // aa4 * bb;
+
             while ((row) + 1 != 0)
             {
                 verts.Add(new Vertex2D(center.X + col, center.Y + row));
@@ -101,10 +115,10 @@ namespace Lab_04
                 {
                     col++;
                     d += bb4 * col;
-                    //d +=
                 }
                 row--;
                 d += aa2 * (3 - (row * 2));
+
             }
 
         }
@@ -129,6 +143,10 @@ namespace Lab_04
             d = a2 + b2 *(-a + 0.25f);
             while (b2 * (y - 0.5f) > a2 * x)
             {
+                verts.Add(new Vertex2D(center.X + x, center.Y + y));
+                verts.Add(new Vertex2D(center.X + x, center.Y - y));
+                verts.Add(new Vertex2D(center.X - x, center.Y + y));
+                verts.Add(new Vertex2D(center.X - x, center.Y - y));
                 if (d < 0)
                 {
                     d += a2*(2*x+3);
@@ -140,10 +158,7 @@ namespace Lab_04
                     x++;
                     y--;
                 }
-                verts.Add(new Vertex2D(center.X + x, center.Y + y));
-                verts.Add(new Vertex2D(center.X + x, center.Y - y));
-                verts.Add(new Vertex2D(center.X - x, center.Y + y));
-                verts.Add(new Vertex2D(center.X - x, center.Y - y));
+               
             }
 
             d = b2 + a2 * (-b + 0.25f);
@@ -152,6 +167,10 @@ namespace Lab_04
             double st = Math.Sqrt(a2 + b2);
             while ((b2 * (y - 0.5) <= a2 * x) && (x >= b2 / st) && (y <= a2 / st))
             {
+                verts.Add(new Vertex2D(center.X + x, center.Y + y));
+                verts.Add(new Vertex2D(center.X + x, center.Y - y));
+                verts.Add(new Vertex2D(center.X - x, center.Y + y));
+                verts.Add(new Vertex2D(center.X - x, center.Y - y));
                 if (d < 0)
                 {
                     d += b2 * (2 * y + 3);
@@ -163,10 +182,6 @@ namespace Lab_04
                     y++;
                     x--;
                 }
-                verts.Add(new Vertex2D(center.X + x, center.Y + y));
-                verts.Add(new Vertex2D(center.X + x, center.Y - y));
-                verts.Add(new Vertex2D(center.X - x, center.Y + y));
-                verts.Add(new Vertex2D(center.X - x, center.Y - y));
             }
 
         }
