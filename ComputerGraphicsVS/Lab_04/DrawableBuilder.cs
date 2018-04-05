@@ -74,51 +74,55 @@ namespace Lab_04
 
         private static void UseBrezenghem(List<Vertex2D> verts, Vertex2D center, float a, float b)
         {
-            int col, row;
-            int aa, bb, aa2, bb2, aa4, bb4;
+            int x, y;
+            int aa, bb, aa2, bb2, aa4, bb4, aa8, bb8;
             bb = IntRound(b * b);
             aa = IntRound(a * a);
             aa2 = aa + aa;
             bb2 = bb + bb;
             aa4 = aa2 + aa2;
             bb4 = bb2 + bb2;
+            aa8 = aa4 + aa4;
+            bb8 = bb4 + bb4;
 
-            row = IntRound(b);
-            col = 0;
+            y = IntRound(b);
+            x = 0;
 
-            int d = aa2 * ((row - 1) * row) + aa + bb2 * (1 - aa);
-            while (aa * (row) > bb * col)
+            //int d = aa2 * ((x - 1) * y) + aa + bb2 * (1 - aa);
+            int d = bb4 * (x + 1) * (x + 1) + aa * (2 * y - 1) * (2 * y - 1) - aa4 * bb;
+            while (aa * (2 * y - 1) > bb2 * (x + 1))
             {
-                verts.Add(new Vertex2D(center.X + col, center.Y + row));
-                verts.Add(new Vertex2D(center.X + col, center.Y - row));
-                verts.Add(new Vertex2D(center.X - col, center.Y + row));
-                verts.Add(new Vertex2D(center.X - col, center.Y - row));
-
+                verts.Add(new Vertex2D(center.X + x, center.Y + y));
+                verts.Add(new Vertex2D(center.X + x, center.Y - y));
+                verts.Add(new Vertex2D(center.X - x, center.Y + y));
+                verts.Add(new Vertex2D(center.X - x, center.Y - y));
+                
                 if (d >= 0)
                 {
-                    row--;
-                    d -= aa4 * row;
+                    d -= aa8 * (y - 1);
+                    y--;
                 }
-                d += bb2 * (3 + (col * 2));
-                col++;
+                d += bb4 * (2 * x + 3);
+                x++;
             }
 
-            d = bb2 * (col + 1) * col + aa2 * (row * (row - 2) + 1) + (1 - aa2) * bb;
-
-            while ((row) + 1 != 0)
+            //d = bb2 * (x + 1) * x + aa2 * (y * (y - 2) + 1) + (1 - aa2) * bb;
+            int tx = (2 * x + 1);
+            int ty = (y + 1);
+            d = bb * tx * tx + aa4 * ty * ty - aa4 * bb;
+            while ((y) + 1 != 0)
             {
-                verts.Add(new Vertex2D(center.X + col, center.Y + row));
-                verts.Add(new Vertex2D(center.X + col, center.Y - row));
-                verts.Add(new Vertex2D(center.X - col, center.Y + row));
-                verts.Add(new Vertex2D(center.X - col, center.Y - row));
-                if (d <= 0)
+                verts.Add(new Vertex2D(center.X + x, center.Y + y));
+                verts.Add(new Vertex2D(center.X + x, center.Y - y));
+                verts.Add(new Vertex2D(center.X - x, center.Y + y));
+                verts.Add(new Vertex2D(center.X - x, center.Y - y));
+                if (d >= 0)
                 {
-                    col++;
-                    d += bb4 * col;
+                    d -= bb8 * (x + 1);
+                    x++;
                 }
-                row--;
-                d += aa2 * (3 - (row * 2));
-
+                d += aa4 * (2 * y + 3);
+                y--;
             }
 
         }
