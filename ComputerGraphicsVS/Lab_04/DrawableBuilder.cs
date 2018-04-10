@@ -127,6 +127,68 @@ namespace Lab_04
 
         }
 
+        private static void UseBrezenghemAlt(List<Vertex2D> verts, Vertex2D center, float rx, float ry)
+        {
+            int rx2 = (int)(rx * rx);//a^2
+            int ry2 = (int)(ry * ry);//b^2
+            int r2y2 = 2 * ry2;
+            int r2x2 = 2 * rx2;
+            int x = 0, y = (int)ry;
+            //f(x,y)=x^2*b^2+a^2y^2-a^2*b^2=0 из каноического          
+
+
+            //error=b^2*(x+1)^2 + a^2*(y-1)^2-a^2*b^2=
+            int d = rx2 + ry2 - r2x2 * y;
+            int d1, d2;
+
+            while (y >= 0)
+            {
+                //AddPoint(ref bitmap, cx, cy, x, y, drawcolor);
+                verts.Add(new Vertex2D(center.X + x, center.Y + y));
+                verts.Add(new Vertex2D(center.X - x, center.Y + y));
+                verts.Add(new Vertex2D(center.X + x, center.Y - y));
+                verts.Add(new Vertex2D(center.X - x, center.Y - y));
+
+                if (d < 0)//гор и диаг
+                {
+                    d1 = 2 * d + r2x2 * y - 1;
+                    if (d1 > 0) //диагональная
+                    {
+                        y -= 1;
+                        x += 1;
+                        d += r2y2 * x + ry2 + rx2 - r2x2 * y;//b^2 (2x+1)+a^2(1-2y)
+                    }
+                    else     //гор
+                    {
+                        x += 1;
+                        d += r2y2 * x + ry2;    //+b^2 (2x+1)
+                    }
+                }
+                else if (d == 0)//диагональная
+                {
+                    x += 1;
+                    y -= 1;
+                    d += r2y2 * x + ry2 + rx2 - r2x2 * y;
+                }
+                else
+                {
+                    d2 = 2 * d - r2y2 * x - 1; //2d-b^2x-1
+                    if (d2 < 0) //диагональная
+                    {
+                        y -= 1;
+                        x += 1;
+                        d += r2y2 * x + ry2 + rx2 - r2x2 * y;
+                    }
+                    else//вертикальная
+                    {
+                        y -= 1;
+                        d += rx2 - r2x2 * y;  //a^2(1-2y)
+                    }
+                }
+            } //end while
+
+        }
+
         private static void UseMiddlepoint(List<Vertex2D> verts, Vertex2D center, float a, float b)
         {
 
@@ -207,7 +269,8 @@ namespace Lab_04
                     UseParametric(verts, center, a, b);
                     break;
                 case Algorithm.Brezehghem:
-                    UseBrezenghem(verts, center, a, b);
+                    //UseBrezenghem(verts, center, a, b);
+                    UseBrezenghemAlt(verts, center, a, b);
                     break;
                 case Algorithm.MiddlePoint:
                     UseMiddlepoint(verts, center, a, b);
