@@ -58,7 +58,7 @@ namespace Lab_04
             float angleStep = 1.0f / Math.Max(a, b);
             double a2 = a * a;
             double b2 = b * b;
-            for (float t = 0; t < Math.PI * 4; t += angleStep)
+            for (float t = 0; t <= Math.PI / 2; t += angleStep)
             {
                 double sint = Math.Sin(t);
                 double sint2 = sint * sint;
@@ -68,6 +68,9 @@ namespace Lab_04
                 int xRes = IntRound(p * cost);
                 int yRes = IntRound(p * sint);
                 verts.Add(new Vertex2D(center.X + xRes, center.Y + yRes));
+                verts.Add(new Vertex2D(center.X + xRes, center.Y - yRes));
+                verts.Add(new Vertex2D(center.X - xRes, center.Y + yRes));
+                verts.Add(new Vertex2D(center.X - xRes, center.Y - yRes));
             }
             
         }

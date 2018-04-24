@@ -17,6 +17,8 @@ namespace Lab_04
         public Vertex2D EllipseCenter;
         public double A, B;
         public double Radius;
+        public double dA, dB, dR;
+        public int N;
     }
 
 
@@ -29,6 +31,8 @@ namespace Lab_04
         private Color _imgColor;
         private bool isEllipse = false;
         private UserData _data;
+        private int N;
+        private double dR, dA, dB;
         
         public MainForm()
         {
@@ -69,6 +73,10 @@ namespace Lab_04
             succes &= Double.TryParse(CircleRadiusBox.Text, out _data.Radius);
             succes &= Double.TryParse(EllipseABox.Text, out _data.A);
             succes &= Double.TryParse(EllipseBBox.Text, out _data.B);
+            succes &= Double.TryParse(dABox.Text, out _data.dA);
+            succes &= Double.TryParse(dBBox.Text, out _data.dB);
+            succes &= Double.TryParse(dRBox.Text, out _data.dR);
+            succes &= Int32.TryParse(NBox.Text, out _data.N);
 
             if(!succes)
                 throw new FormatException();
@@ -137,16 +145,33 @@ namespace Lab_04
             }
 
             IDrawable drawable;
-            if (isEllipse)
-            {
-                drawable = DrawableBuilder.BuildEllipse(_data.EllipseCenter, (float)_data.A, (float)_data.B, _imgColor, _alg);
-            }
-            else
-            {
-                drawable = DrawableBuilder.BuildCircle(_data.CircleCenter, (int)_data.Radius, _imgColor, _alg);
-            }
 
-            _images.Add(drawable);
+            dA = _data.A;
+            dB = _data.B;
+            double k = (dA + _data.dA) / dA;
+            _data.dB = (k * dB) - dB;
+            dR = _data.Radius;
+            for (int i = 0; i < _data.N; i++)
+            {
+                if (isEllipse)
+                {
+                    drawable = DrawableBuilder.BuildEllipse(_data.EllipseCenter, (float)dA, (float) dB,
+                        _imgColor, _alg);
+                    dA += _data.dA;
+                    dB += _data.dB;
+                    if (dA <= 0 || dB <= 0)
+                        break;
+                }
+                else
+                {
+                    drawable = DrawableBuilder.BuildCircle(_data.CircleCenter, (int) dR, _imgColor, _alg);
+                    dR += _data.dR;
+                    if (dR <= 0)
+                        break;
+                }
+
+                _images.Add(drawable);
+            }
             DrawImages();
         }
 
@@ -175,6 +200,16 @@ namespace Lab_04
         {
             ClearImages();
             ClearScreen();
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            double sizeA = DrawingCanvas.Width;
+            double sizeB = DrawingCanvas.Height;
+            EllipseXBox.Text = (sizeA / 2).ToString();
+            EllipseYBox.Text = (sizeB / 2).ToString();
+            CircleXBox.Text = (sizeA / 2).ToString();
+            CircleYBox.Text = (sizeB / 2).ToString();
         }
     }
 }
