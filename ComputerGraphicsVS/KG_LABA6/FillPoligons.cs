@@ -165,7 +165,7 @@ namespace KG_LABA6
                 while (!CheckColor(X, Y, BorderColor));
 
                 int Xl = X + 1;
-                //Ищем новые затавочные точки
+                //Ищем новые затравочные точки
                 SearchZatr(Xl, Xr, Y - 1);
                 SearchZatr(Xl, Xr, Y + 1);
 

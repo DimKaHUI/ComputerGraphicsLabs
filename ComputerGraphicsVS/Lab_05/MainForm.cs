@@ -103,6 +103,7 @@ namespace Lab_05
         {
             DrawingCanvas.CreateGraphics().Clear(Color.White);
             _buffer.Clear();
+            _image = null;
         }
 
         private void FillButton_Click(object sender, EventArgs e)

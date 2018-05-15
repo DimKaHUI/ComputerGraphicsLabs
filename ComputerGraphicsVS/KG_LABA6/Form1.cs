@@ -72,11 +72,15 @@ namespace KG_LABA6
             richTextBox1.Text = @"            Ввод затравочной точки по колесику или shift
             Ввод прямых паралельно осям по control
             Замыкание по правой кнопке
-            Установка точки по левой кнопке
-            Две точки с зажатым alt-эллипс";
+            Установка точки по левой кнопке";
+            ;
         }
 
-
+        public Point GetCursorRelativePosition()
+        {
+            Point absoluteCursor = System.Windows.Forms.Cursor.Position;
+            return pictureBox1.PointToClient(absoluteCursor);
+        }
 
         /// <summary>
         /// Сохранение точек
@@ -93,15 +97,18 @@ namespace KG_LABA6
 
             if(ModifierKeys==Keys.Alt)
             {
-                ellipse.Add(new Point(MousePosition.X - MouseErrorX, MousePosition.Y - MouseErrorY));
-                DrawAllLines();
+                /*ellipse.Add(new Point(MousePosition.X - MouseErrorX, MousePosition.Y - MouseErrorY));
+                DrawAllLines();*/
                 return;
             }
             if((MouseButtons.Middle== ((MouseEventArgs)e).Button)||(ModifierKeys == Keys.Shift))
             {
 
-                StPoint.X=MousePosition.X - MouseErrorX;
-                StPoint.Y=MousePosition.Y - MouseErrorY;
+                Point p = GetCursorRelativePosition();
+                //StPoint.X=MousePosition.X - MouseErrorX;
+                //StPoint.Y=MousePosition.Y - MouseErrorY;
+                StPoint.X = p.X;
+                StPoint.Y = p.Y;
 
                 //блокировка событий
                 flag = true;
@@ -121,7 +128,7 @@ namespace KG_LABA6
                 }
                 else
                 {
-                    Polygons[Polygons.Count - 1].Add(new Point(MousePosition.X - MouseErrorX, MousePosition.Y - MouseErrorY));
+                    Polygons[Polygons.Count - 1].Add(GetCursorRelativePosition());
                 }
 
             }

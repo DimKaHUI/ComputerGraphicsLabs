@@ -279,9 +279,9 @@ namespace Lab_05
             intersections.Sort(CompareByLine);
             intersections = SortByX(intersections);
 
-            VertexList listForm = new VertexList();
-            listForm.AddToList(intersections);
-            listForm.Show();
+            //VertexList listForm = new VertexList();
+            //listForm.AddToList(intersections);
+            //listForm.Show();
 
             // Закрашиваем
 
