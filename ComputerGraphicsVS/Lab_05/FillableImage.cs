@@ -320,7 +320,7 @@ namespace Lab_05
                 }
                 if (line.Y != y)
                 {
-                    Thread.Sleep(500);
+                    Thread.Sleep(100);
                     y = line.Y;
                 }
             }
