@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Edge.cs" />
     <Compile Include="FillableImage.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>

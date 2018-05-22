@@ -15,6 +15,7 @@ namespace Lab_05
         //private List<FillableImage> _images = new List<FillableImage>();
         private FillableImage _image;
         private List<Point> _buffer = new List<Point>();
+        private Point _closer = new Point(-1, -1);
 
         public MainForm()
         {
@@ -29,9 +30,14 @@ namespace Lab_05
 
         private void AddPointToBuffer(Point p)
         {
-            if(_buffer.Count > 0)
+            if(_buffer.Count > 0 && _closer.X != -1 && _closer.Y != -1)
                 DrawingCanvas.CreateGraphics().DrawLine(new Pen(GetEdgeColor()), p, _buffer[_buffer.Count - 1] );
             _buffer.Add(p);
+            if (_closer.X == -1 && _closer.Y == -1)
+                _closer = p;
+            else 
+                _buffer.Add(p);
+            
         }
 
         private Color GetEdgeColor()
@@ -63,21 +69,25 @@ namespace Lab_05
                 MessageBox.Show("Указано меньше 3-х точек");
                 return;
             }
-            FillableImage img = new FillableImage(_buffer, GetEdgeColor(), GetFillColor());
-            //_images.Add(img);
-            _image = img;
-            _buffer.Clear();
-            _image.DrawEdges(DrawingCanvas);
+
+            _buffer.Add(_closer);
+
+            _closer = new Point(-1, -1);
+
+            DrawingCanvas.CreateGraphics().DrawLine(new Pen(GetEdgeColor()), _buffer[_buffer.Count - 2], _buffer.Last());
         }
 
         // Adding vertex via mouse
         private void DrawingCanvas_Click(object sender, EventArgs e)
         {
             Point p = GetCursorRelativePosition();
-            //Graphics gr = DrawingCanvas.CreateGraphics();
-            //Point prev = _buffer[_buffer.Count - 1];
-            //gr.DrawLine(new Pen(GetEdgeColor()), prev.X, prev.Y, p.X, p.Y);
+
             AddPointToBuffer(p);
+
+            if (_buffer.Count > 1 && _closer != p)
+            {
+                DrawingCanvas.CreateGraphics().DrawLine(new Pen(GetEdgeColor()),_buffer[_buffer.Count - 2], _buffer.Last());
+            }
         }
 
         private void AddVertexButton_Click(object sender, EventArgs e)
@@ -101,37 +111,20 @@ namespace Lab_05
 
         private void ClearButton_Click(object sender, EventArgs e)
         {
-            DrawingCanvas.CreateGraphics().Clear(Color.White);
             _buffer.Clear();
-            _image = null;
+            DrawingCanvas.CreateGraphics().Clear(Color.White);
         }
 
         private void FillButton_Click(object sender, EventArgs e)
         {
-            if(_image == null)
-                return;
-            try
-            {
-                _image.Fill(DrawingCanvas);
-            }
-            catch (NotEnoughVerts ex)
-            {
-                MessageBox.Show("Фигура не создана");
-            }
+            FillableImage img = new FillableImage(_buffer, DrawingCanvas, GetEdgeColor(), GetFillColor());
+            img.Fill(0);
         }
 
         private void FillDelayedButton_Click(object sender, EventArgs e)
         {
-            if (_image == null)
-                return;
-            try
-            {
-                _image.FillDelayed(DrawingCanvas);
-            }
-            catch (NotEnoughVerts ex)
-            {
-                MessageBox.Show("Фигура не создана");
-            }
+            FillableImage img = new FillableImage(_buffer, DrawingCanvas, GetEdgeColor(), GetFillColor());
+            img.Fill(100);
         }
 
         
