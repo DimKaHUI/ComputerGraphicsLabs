@@ -109,9 +109,12 @@ namespace Lab_09
                 if(!_cutterFinalized)
                     if (shiftPressed)
                     {
-                        _cutterFinalized = true;
-                        DrawLine(_cutter.Last(), _cutter[0], _cutterColor, 1);
-                        _cutter.Add(_cutter[0]);
+                        if (_cutter.Count > 3)
+                        {
+                            _cutterFinalized = true;
+                            DrawLine(_cutter.Last(), _cutter[0], _cutterColor, 1);
+                            _cutter.Add(_cutter[0]);
+                        }
                     }
                     else
                     {
@@ -137,9 +140,16 @@ namespace Lab_09
                 if (!_polygonFinalized)
                     if (shiftPressed)
                     {
-                        _polygonFinalized = true;
-                        DrawLine(_polygon.Last(), _polygon[0], _polygonColor, 1);
-                        _polygon.Add(_polygon[0]);
+                        if (_polygon.Count > 3)
+                        {
+                            _polygonFinalized = true;
+                            DrawLine(_polygon.Last(), _polygon[0], _polygonColor, 1);
+
+                            DrawingCanvas.CreateGraphics().FillEllipse(new SolidBrush(Color.Red), _polygon[0].X - 3,
+                                _polygon[0].Y - 3, 6, 6);
+
+                            _polygon.Add(_polygon[0]);
+                        }
                     }
                     else
                     {
@@ -172,14 +182,10 @@ namespace Lab_09
                     DrawLine(result[i], result[i + 1], _resultColor, 2);
                 }
             }
-            catch (IndexOutOfRangeException ex)
-            {
-                throw ex;
-            }
-            /*catch (ArgumentException ex)
+            catch (ArgumentException ex)
             {
                 MessageBox.Show(ex.Message);
-            }*/
+            }
         }
 
         private void clearButton_Click(object sender, EventArgs e)

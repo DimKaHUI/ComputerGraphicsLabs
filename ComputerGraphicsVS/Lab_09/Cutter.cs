@@ -15,12 +15,6 @@ namespace Lab_09
             public int y;
             public int z;
 
-            public Vector(int a, int b, int c = 0)
-            {
-                x = a;
-                y = b;
-                z = c;
-            }
             public Vector(Point end, Point start)
             {
                 x = end.X - start.X;
@@ -79,11 +73,6 @@ namespace Lab_09
             }
 
             return res;
-        }
-
-        private static int VectorMultZ(int ax, int ay, int bx, int by) //векторное произведение
-        {
-            return ax * by - bx * ay;
         }
 
         public static bool IsVisible(Point s, Point e, Point p, int side)
@@ -181,35 +170,28 @@ namespace Lab_09
             for (int i = 0; i < cutter.Count - 1; i++)
             {
                 //nq = 0; // 2.1. Setting number of resulting vertexes to zero
-                result = new List<Point>();
+                result.Clear();
 
-                Point f = Point.Empty;
+                // 2.2.1
+                Point f = polygon[0];
+
                 // 2.2 Cycle foreach polygon's edge
                 for (int j = 0; j < polygon.Count; j++)
                 {
-                    // 2.2.1
-                    if (j == 0) // j == 1 (first vertex)
+                    // 2.2.2 | 2.2.3
+                    Point t;
+                    bool intersected = HasIntersection(
+                        s,
+                        polygon[j],
+                        cutter[i],
+                        cutter[i + 1], out t);
+                    if (intersected)
                     {
-                        f = polygon[0];
-                        // goto 2.2.5
+                        // 2.2.4 Increasing number of resulting vertexes
+                        //nq++;
+                        result.Add(t);
                     }
-                    else
-                    {
-                        // 2.2.2 | 2.2.3
-                        Point t;
-                        bool intersected = HasIntersection(
-                            s,
-                            polygon[j],
-                            cutter[i],
-                            cutter[i + 1], out t);
-                        if (intersected)
-                        {
-                            // 2.2.4 Increasing number of resulting vertexes
-                            //nq++;
-                            result.Add(t);
-                        }
-                        // else goto 2.2.5
-                    }
+                    // else goto 2.2.5
 
                     // 2.2.5
                     s = polygon[j];
@@ -219,7 +201,6 @@ namespace Lab_09
                     {
                         result.Add(s);
                     }
-
                     // 2.2.7 end of inner cycle
                 }
 
@@ -239,22 +220,20 @@ namespace Lab_09
                         //nq++;
                         result.Add(t);
                     }
-                    else
-                    {
-                        // goto 2
-                    }
+                    // goto 2
                 }
                 else
-                {
-                    polygon.Add(polygon[0]);
                     return result;
-                }
-                // 2.7 ????
+                
+                // 2.7
+                ResultDrawer drawer = new ResultDrawer();
+                drawer.Show();
+                drawer.DrawPolygon(cutter, Color.Black);
+                drawer.DrawPolygon(result, Color.Red);
                 polygon = new List<Point>(result);
                 // 2.8
             }
 
-            polygon.Add(polygon[0]);
             result.Add(result[0]);
             // 2.9
             return result;
