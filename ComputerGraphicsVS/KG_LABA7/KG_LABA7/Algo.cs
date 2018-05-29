@@ -44,8 +44,8 @@ namespace KG_LABA7
         private int[] GetPointCode(Point p)
         {
             int[] t = new int[4] {0, 0, 0, 0};
-            if (p.X < xLeft) t[3] = 1;
-            if (p.X > xRight) t[2] = 1;
+            if (p.X < xLeft) t[3] = 1; // Левее окна
+            if (p.X > xRight) t[2] = 1; // Правее окна
             if (p.Y < yBot) t[1] = 1; // Ниже окна
             if (p.Y > yTop) t[0] = 1; // Выше окна
             return t;
