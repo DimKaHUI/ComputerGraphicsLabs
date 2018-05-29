@@ -129,14 +129,14 @@ namespace Lab_09
 
             correct &= resX >= minX && resX <= maxX && resY >= minY && resY <= maxY;
 
-            // Check if lies on second segment
+            /*// Check if lies on second segment
             minX = Math.Min(s2.X, e2.X);
             maxX = Math.Max(s2.X, e2.X);
 
             minY = Math.Min(s2.Y, e2.Y);
             maxY = Math.Max(s2.Y, e2.Y);
 
-            correct &= resX >= minX && resX <= maxX && resY >= minY && resY <= maxY;
+            correct &= resX >= minX && resX <= maxX && resY >= minY && resY <= maxY;*/
 
             return correct;
         }
@@ -226,10 +226,10 @@ namespace Lab_09
                     return result;
                 
                 // 2.7
-                ResultDrawer drawer = new ResultDrawer();
+                /*ResultDrawer drawer = new ResultDrawer();
                 drawer.Show();
                 drawer.DrawPolygon(cutter, Color.Black);
-                drawer.DrawPolygon(result, Color.Red);
+                drawer.DrawPolygon(result, Color.Red);*/
                 polygon = new List<Point>(result);
                 // 2.8
             }

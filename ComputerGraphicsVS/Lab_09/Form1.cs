@@ -109,7 +109,7 @@ namespace Lab_09
                 if(!_cutterFinalized)
                     if (shiftPressed)
                     {
-                        if (_cutter.Count > 3)
+                        if (_cutter.Count >= 3)
                         {
                             _cutterFinalized = true;
                             DrawLine(_cutter.Last(), _cutter[0], _cutterColor, 1);
@@ -140,7 +140,7 @@ namespace Lab_09
                 if (!_polygonFinalized)
                     if (shiftPressed)
                     {
-                        if (_polygon.Count > 3)
+                        if (_polygon.Count >= 3)
                         {
                             _polygonFinalized = true;
                             DrawLine(_polygon.Last(), _polygon[0], _polygonColor, 1);
