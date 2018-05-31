@@ -145,8 +145,8 @@ namespace Lab_09
                             _polygonFinalized = true;
                             DrawLine(_polygon.Last(), _polygon[0], _polygonColor, 1);
 
-                            DrawingCanvas.CreateGraphics().FillEllipse(new SolidBrush(Color.Red), _polygon[0].X - 3,
-                                _polygon[0].Y - 3, 6, 6);
+                            /*DrawingCanvas.CreateGraphics().FillEllipse(new SolidBrush(Color.Red), _polygon[0].X - 3,
+                                _polygon[0].Y - 3, 6, 6);*/
 
                             _polygon.Add(_polygon[0]);
                         }
@@ -200,6 +200,49 @@ namespace Lab_09
             colorPanelCutter.BackColor = _cutterColor;
             colorPanelPolygon.BackColor = _polygonColor;
             colorPanelResult.BackColor = _resultColor;
+        }
+
+        private Point GetPointFromForm()
+        {
+            int x = Int32.Parse(xBox.Text);
+            int y = Int32.Parse(yBox.Text);
+            return new Point(x, y);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Point p = GetPointFromForm();
+                if (!_cutterFinalized)
+                {
+                    _cutter.Add(p);
+                    if (_cutter.Count > 1)
+                        DrawLine(p, _cutter[0], _cutterColor, 1);
+                }
+            }
+            catch (FormatException ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR", MessageBoxButtons.OK);
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Point p = GetPointFromForm();
+                if (!_polygonFinalized)
+                {
+                    _polygon.Add(p);
+                    if(_polygon.Count > 1)
+                        DrawLine(p, _polygon[0], _polygonColor, 1);
+                }
+            }
+            catch (FormatException ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR", MessageBoxButtons.OK);
+            }
         }
     }
 }

@@ -89,7 +89,7 @@ namespace Lab_09
         public static bool HasIntersection(Point s1, Point e1, Point s2, Point e2, out Point sec)
         {
             sec = Point.Empty;
-            
+
             double resX = 0;
             double resY = 0;
 
@@ -99,13 +99,13 @@ namespace Lab_09
             if (s1.X - e1.X == 0)
                 kf = Double.PositiveInfinity;
             else
-                kf = (double)(s1.Y - e1.Y) / (s1.X - e1.X);
+                kf = (double) (s1.Y - e1.Y) / (s1.X - e1.X);
 
             if (s2.X - e2.X == 0)
                 kg = Double.PositiveInfinity;
             else
-                kg = (double)(s2.Y - e2.Y) / (s2.X - e2.X);
-            
+                kg = (double) (s2.Y - e2.Y) / (s2.X - e2.X);
+
             // Finding B
             double bf = s1.Y - kf * s1.X;
             double bg = s2.Y - kg * s2.X;
@@ -116,16 +116,16 @@ namespace Lab_09
             resX = (bg - bf) / (kf - kg);
             resY = kf * resX + bf;
 
-            sec = new Point((int)Math.Round(resX), (int)Math.Round(resY));
+            sec = new Point((int) Math.Round(resX), (int) Math.Round(resY));
 
             // Check if lies on first segment
             bool correct = true;
+            double minX, maxX, minY, maxY;
+            minX = Math.Min(s1.X, e1.X);
+            maxX = Math.Max(s1.X, e1.X);
 
-            double minX = Math.Min(s1.X, e1.X);
-            double maxX = Math.Max(s1.X, e1.X);
-
-            double minY = Math.Min(s1.Y, e1.Y);
-            double maxY = Math.Max(s1.Y, e1.Y);
+            minY = Math.Min(s1.Y, e1.Y);
+            maxY = Math.Max(s1.Y, e1.Y);
 
             correct &= resX >= minX && resX <= maxX && resY >= minY && resY <= maxY;
 
@@ -148,18 +148,18 @@ namespace Lab_09
 
             if (polygon.Count < 4)
             {
-                throw new ArgumentException("Слишком мало вершин в многоугольнике", nameof(polygon));
+                throw new ArgumentException("Слишком мало вершин в многоугольнике", "polygonArg");
             }
 
             if (cutter.Count < 4)
             {
-                throw new ArgumentException("Слишком мало вершин в отсекателе", nameof(cutter));
+                throw new ArgumentException("Слишком мало вершин в отсекателе", "cutter");
             }
 
             int dir = GetDirection(cutter);
 
             if(dir == 0)
-                throw new ArgumentException("Отсекатель должен быть выпуклым", nameof(cutter));
+                throw new ArgumentException("Отсекатель должен быть выпуклым", "cutter");
 
             polygon.RemoveAt(polygon.Count - 1);
 
