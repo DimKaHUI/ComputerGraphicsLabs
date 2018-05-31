@@ -179,19 +179,20 @@ namespace Lab_09
                 for (int j = 0; j < polygon.Count; j++)
                 {
                     // 2.2.2 | 2.2.3
-                    Point t;
-                    bool intersected = HasIntersection(
-                        s,
-                        polygon[j],
-                        cutter[i],
-                        cutter[i + 1], out t);
-                    if (intersected)
+                    if (j > 0)
                     {
-                        // 2.2.4 Increasing number of resulting vertexes
-                        //nq++;
-                        result.Add(t);
+                        Point t;
+                        bool intersected = HasIntersection(
+                            s,
+                            polygon[j],
+                            cutter[i],
+                            cutter[i + 1], out t);
+                        if (intersected)
+                        {
+                            // 2.2.4 Increasing number of resulting vertexes
+                            result.Add(t);
+                        }
                     }
-                    // else goto 2.2.5
 
                     // 2.2.5
                     s = polygon[j];
@@ -217,10 +218,8 @@ namespace Lab_09
                     if (intersected)
                     {
                         // 2.6 Increasing number of resulting vertexes
-                        //nq++;
                         result.Add(t);
                     }
-                    // goto 2
                 }
                 else
                     return result;

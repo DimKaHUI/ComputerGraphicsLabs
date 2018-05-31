@@ -16,7 +16,7 @@ namespace Lab_09
         private List<Point> _cutter = new List<Point>();
         private readonly Color _cutterColor = Color.Black;
         private readonly Color _polygonColor = Color.Red;
-        private readonly Color _resultColor = Color.Green;
+        private readonly Color _resultColor = Color.GreenYellow;
 
         private bool _cutterFinalized = false;
         private bool _polygonFinalized = false;
@@ -179,7 +179,9 @@ namespace Lab_09
 
                 for (int i = 0; i < result.Count - 1; i++)
                 {
-                    DrawLine(result[i], result[i + 1], _resultColor, 2);
+                    DrawLine(result[i], result[i + 1], _resultColor, 3);
+                    DrawingCanvas.CreateGraphics().FillEllipse(new SolidBrush(Color.Aqua), result[i].X - 2, result[i].Y - 2, 4, 4);
+                    DrawingCanvas.CreateGraphics().DrawString(i.ToString(), DefaultFont, new SolidBrush(Color.Fuchsia), result[i].X - 2, result[i].Y - 2);
                 }
             }
             catch (ArgumentException ex)
