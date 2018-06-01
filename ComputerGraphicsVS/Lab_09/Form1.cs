@@ -180,8 +180,8 @@ namespace Lab_09
                 for (int i = 0; i < result.Count - 1; i++)
                 {
                     DrawLine(result[i], result[i + 1], _resultColor, 3);
-                    DrawingCanvas.CreateGraphics().FillEllipse(new SolidBrush(Color.Aqua), result[i].X - 2, result[i].Y - 2, 4, 4);
-                    DrawingCanvas.CreateGraphics().DrawString(i.ToString(), DefaultFont, new SolidBrush(Color.Fuchsia), result[i].X - 2, result[i].Y - 2);
+                    //DrawingCanvas.CreateGraphics().FillEllipse(new SolidBrush(Color.Aqua), result[i].X - 2, result[i].Y - 2, 4, 4);
+                    //DrawingCanvas.CreateGraphics().DrawString(i.ToString(), DefaultFont, new SolidBrush(Color.Fuchsia), result[i].X - 2, result[i].Y - 2);
                 }
             }
             catch (ArgumentException ex)
